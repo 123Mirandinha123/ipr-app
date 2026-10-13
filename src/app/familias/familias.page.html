@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Famílias</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <p class="info-text">
+    Crie famílias e adicione os membros dentro delas. Na geração das escalas, pessoas da mesma família são priorizadas para o mesmo dia e turno (inclusive entre ministérios).
+  </p>
+
+  <ion-button *ngIf="podeGerenciar" expand="full" color="primary" (click)="novaFamilia()">
+    + Nova família
+  </ion-button>
+
+  <ng-container *ngIf="familias.length > 0; else vazio">
+    <ion-card *ngFor="let familia of familias">
+      <ion-card-header class="card-header-familia">
+        <ion-card-title>
+          <ion-input
+            [value]="familia.nome"
+            [readonly]="!podeGerenciar"
+            (ionBlur)="renomearFamilia(familia, $event.target.value)"
+            class="nome-familia-input"
+          ></ion-input>
+        </ion-card-title>
+        <ion-button *ngIf="podeGerenciar" fill="outline" color="danger" size="small" (click)="excluirFamilia(familia)">
+          <ion-icon slot="start" name="trash-outline"></ion-icon>
+          Excluir família
+        </ion-button>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list lines="full">
+          <ion-item *ngFor="let uid of familia.membros">
+            <ion-label>{{ getNomeMembro(uid) }}</ion-label>
+            <ion-button *ngIf="podeGerenciar" slot="end" fill="clear" color="danger" size="small" (click)="removerMembro(familia, uid)">
+              Remover
+            </ion-button>
+          </ion-item>
+
+          <ion-item *ngIf="podeGerenciar">
+            <ion-label>
+              <ion-select
+                [value]="''"
+                placeholder="Adicionar membro"
+                interface="popover"
+                (ionChange)="adicionarMembro(familia, $event.detail.value); $event.target.value = ''"
+              >
+                <ion-select-option *ngFor="let u of getDisponiveis(familia)" [value]="u.uid">
+                  + {{ u.nome }}
+                </ion-select-option>
+              </ion-select>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <ng-template #vazio>
+    <ion-text class="ion-text-center">
+      <p>Nenhuma família criada ainda.</p>
+    </ion-text>
+  </ng-template>
+
+</ion-content>

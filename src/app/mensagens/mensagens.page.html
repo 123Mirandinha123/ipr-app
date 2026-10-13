@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Mensagens</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ng-container *ngIf="mensagens.length > 0; else vazio">
+
+    <ion-list>
+
+      <ion-item *ngFor="let msg of mensagens">
+
+        <ion-label>
+
+          <h2>{{ msg.nome }}</h2>
+
+          <div class="info-linha">
+
+            <span class="ministerio-badge">
+              {{ msg.ministerio }}
+            </span>
+
+            <span class="data-text">
+              {{ formatarData(msg.data) }}
+            </span>
+
+            <span class="turno" *ngIf="msg.turno">
+              ({{ msg.turno === 'manha' ? 'Manhã' : 'Noite' }})
+            </span>
+
+          </div>
+
+          <p *ngIf="msg.motivo" class="motivo-text">
+            {{ msg.motivo }}
+          </p>
+
+        </ion-label>
+
+      </ion-item>
+
+    </ion-list>
+
+  </ng-container>
+
+  <ng-template #vazio>
+
+    <p class="vazio">
+      Nenhuma mensagem.
+    </p>
+
+  </ng-template>
+
+</ion-content>

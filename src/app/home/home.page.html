@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Escalas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="usuario-info" *ngIf="usuario">
+    <ion-badge color="medium">{{ getNomeUsuario() }}</ion-badge>
+    <ion-badge *ngIf="authService.isLeader" color="success">Lider</ion-badge>
+    <ion-badge *ngIf="authService.isAdmin" color="warning">Admin</ion-badge>
+  </div>
+
+  <ion-list>
+    <ion-item *ngIf="participaDoMinisterio('louvor') || authService.isAdmin" routerLink="/escalas/louvor" detail>
+      <ion-label>Louvor</ion-label>
+      <ion-note slot="end">{{ contagemMembros('louvor') }} membro(s)</ion-note>
+    </ion-item>
+    <ion-item *ngIf="participaDoMinisterio('midia') || authService.isAdmin" routerLink="/escalas/midia" detail>
+      <ion-label>Mídia</ion-label>
+      <ion-note slot="end">{{ contagemMembros('midia') }} membro(s)</ion-note>
+    </ion-item>
+    <ion-item *ngIf="participaDoMinisterio('renoshow') || authService.isAdmin" routerLink="/escalas/renoshow" detail>
+      <ion-label>RenoShow</ion-label>
+      <ion-note slot="end">{{ contagemMembros('renoshow') }} membro(s)</ion-note>
+    </ion-item>
+    <ion-item *ngIf="participaDoMinisterio('maternal') || authService.isAdmin" routerLink="/escalas/maternal" detail>
+      <ion-label>Maternal</ion-label>
+      <ion-note slot="end">{{ contagemMembros('maternal') }} membro(s)</ion-note>
+    </ion-item>
+    <ion-item *ngIf="participaDoMinisterio('4a6') || authService.isAdmin" routerLink="/escalas/4a6" detail>
+      <ion-label>4 à 6</ion-label>
+      <ion-note slot="end">{{ contagemMembros('4a6') }} membro(s)</ion-note>
+    </ion-item>
+    <ion-item *ngIf="participaDoMinisterio('7a10') || authService.isAdmin" routerLink="/escalas/7a10" detail>
+      <ion-label>7 à 10</ion-label>
+      <ion-note slot="end">{{ contagemMembros('7a10') }} membro(s)</ion-note>
+    </ion-item>
+    <ion-item *ngIf="participaDoMinisterio('juniores') || authService.isAdmin" routerLink="/escalas/juniores" detail>
+      <ion-label>Juniores</ion-label>
+      <ion-note slot="end">{{ contagemMembros('juniores') }} membro(s)</ion-note>
+    </ion-item>
+    <ion-item *ngIf="participaDoMinisterio('adolescentes') || authService.isAdmin" routerLink="/escalas/adolescentes" detail>
+      <ion-label>Adolescentes</ion-label>
+      <ion-note slot="end">{{ contagemMembros('adolescentes') }} membro(s)</ion-note>
+    </ion-item>
+    <ion-item *ngIf="participaDoMinisterio('sonoplastia') || authService.isAdmin" routerLink="/escalas/sonoplastia" detail>
+      <ion-label>Sonoplastia</ion-label>
+      <ion-note slot="end">{{ contagemMembros('sonoplastia') }} membro(s)</ion-note>
+    </ion-item>
+    <ion-item *ngIf="participaDoMinisterio('diaconos') || authService.isAdmin" routerLink="/escalas/diaconos" detail>
+      <ion-label>Diáconos</ion-label>
+      <ion-note slot="end">{{ contagemMembros('diaconos') }} membro(s)</ion-note>
+    </ion-item>
+  </ion-list>
+
+  <div class="ion-padding-top">
+    <ion-button *ngIf="authService.isAdmin" expand="block" color="success" (click)="criarTodasEscalas()">
+      Criar todas as escalas do mês
+    </ion-button>
+    <ion-button *ngIf="authService.isAdmin" expand="block" color="primary" routerLink="/escalas-do-dia">
+      Escalas do Dia
+    </ion-button>
+    <ion-button *ngIf="authService.isAdmin" expand="block" color="danger" fill="outline" (click)="excluirTodasEscalas()">
+      Excluir todas as escalas
+    </ion-button>
+    <ion-button *ngIf="authService.isAdmin" expand="block" fill="outline" routerLink="/membros">
+      Gerenciar Membros
+    </ion-button>
+  </div>
+
+</ion-content>

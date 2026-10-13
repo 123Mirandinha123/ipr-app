@@ -1,0 +1,429 @@
+/* ===================== */
+/* Tema */
+/* ===================== */
+
+ion-content {
+  --background: #0b0b0b;
+}
+
+ion-toolbar {
+  --background: #111827;
+  --color: #fff;
+  border-bottom: 1px solid rgba(33,150,243,.2);
+}
+
+ion-title {
+  color: white;
+  font-weight: 700;
+}
+
+ion-back-button,
+ion-menu-button,
+ion-button[fill="clear"] {
+  --color: #42a5f5;
+}
+
+/* ===================== */
+/* Texto Superior */
+/* ===================== */
+
+.info-text {
+  color: #8f9bb3;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+/* ===================== */
+/* Lista */
+/* ===================== */
+
+ion-list {
+  background: transparent;
+}
+
+ion-item {
+  --background: #151515;
+  --color: white;
+
+  border-radius: 14px;
+
+  margin-bottom: 12px;
+
+  --padding-start: 16px;
+  --inner-padding-end: 16px;
+
+  border: 1px solid rgba(33,150,243,.12);
+
+  transition: .25s;
+}
+
+ion-item:hover {
+
+  --background: #1b2434;
+
+  transform: translateY(-2px);
+
+}
+
+ion-label h2 {
+
+  color: white;
+
+  font-size: 17px;
+
+  font-weight: 600;
+}
+
+ion-label p {
+
+  color: #a0a8b8;
+
+  margin-top: 6px;
+
+  font-size: 13px;
+}
+
+.ministerios-lista {
+
+  color: #42a5f5 !important;
+
+  font-weight: 500;
+}
+
+/* ===================== */
+/* Sliding */
+/* ===================== */
+
+ion-item-option {
+
+  font-weight: 600;
+
+  border-radius: 0;
+}
+
+/* ===================== */
+/* Botões */
+/* ===================== */
+
+ion-button {
+
+  --border-radius: 12px;
+
+  text-transform: none;
+
+  font-weight: 600;
+}
+
+ion-button:not([fill="clear"]) {
+
+  --background: #1565c0;
+
+  height: 48px;
+}
+
+/* ===================== */
+/* Modal */
+/* ===================== */
+
+.modal-overlay {
+
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0,0,0,.75);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  z-index: 999;
+}
+
+.modal-content {
+
+  width: min(650px,95vw);
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: #151515;
+
+  color: white;
+
+  border-radius: 18px;
+
+  padding: 24px;
+
+  border: 1px solid rgba(33,150,243,.15);
+
+  box-shadow: 0 15px 40px rgba(0,0,0,.5);
+}
+
+.modal-content h3{
+
+  margin-top:0;
+
+  margin-bottom:20px;
+
+  text-align:center;
+
+  color:white;
+}
+
+/* Campos */
+
+.modal-content ion-item{
+
+  --background:#1f1f1f;
+
+  border-radius:12px;
+
+  margin-bottom:14px;
+}
+
+/* ===================== */
+/* Ministérios */
+/* ===================== */
+
+.ministerios-section{
+
+  margin-top:25px;
+}
+
+.section-header{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:15px;
+
+  color:white;
+}
+
+.ministerio-card{
+
+  background:#1d1d1d;
+
+  border-radius:14px;
+
+  padding:15px;
+
+  margin-bottom:16px;
+
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.ministerio-header{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:15px;
+}
+
+/* ===================== */
+/* Select */
+/* ===================== */
+
+ion-select{
+
+  width:100%;
+
+  color:white;
+}
+
+/* ===================== */
+/* Checkboxes */
+/* ===================== */
+
+ion-checkbox{
+
+  --checkbox-background:#222;
+
+  --checkbox-background-checked:#1565c0;
+
+  --border-color:#555;
+
+  margin-top:12px;
+}
+
+.funcoes-grid{
+
+  display:grid;
+
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+
+  gap:12px;
+
+  margin-top:18px;
+}
+
+/* ===================== */
+/* Rodapé Modal */
+/* ===================== */
+
+.modal-actions{
+
+  display:flex;
+
+  gap:12px;
+
+  justify-content:flex-end;
+
+  margin-top:25px;
+}
+
+/* ===================== */
+/* Vazio */
+/* ===================== */
+
+ion-text,
+.vazio{
+
+  color:#999;
+
+  text-align:center;
+
+  margin-top:40px;
+}
+
+/* ===================== */
+/* Scroll */
+/* ===================== */
+
+.modal-content::-webkit-scrollbar{
+
+  width:6px;
+}
+
+.modal-content::-webkit-scrollbar-thumb{
+
+  background:#1565c0;
+
+  border-radius:10px;
+}
+
+/* ===================== */
+/* Tema claro */
+/* ===================== */
+
+@media (prefers-color-scheme: light) {
+
+  ion-content {
+    --background: #f3f5f9;
+  }
+
+  ion-toolbar {
+    --background: #ffffff;
+    --color: #111827;
+    border-bottom: 1px solid rgba(21, 101, 192, .15);
+  }
+
+  ion-title {
+    color: #111827;
+  }
+
+  .info-text {
+    color: #4b5563;
+  }
+
+  ion-item {
+    --background: #ffffff;
+    --color: #111827;
+    border: 1px solid rgba(21, 101, 192, .12);
+  }
+
+  ion-item:hover {
+    --background: #eef1f6;
+  }
+
+  ion-label h2 {
+    color: #111827;
+  }
+
+  ion-label p {
+    color: #6b7280;
+  }
+
+  .modal-overlay {
+    background: rgba(0, 0, 0, .4);
+  }
+
+  .modal-content {
+    background: #ffffff;
+    color: #111827;
+    border: 1px solid rgba(21, 101, 192, .15);
+    box-shadow: 0 15px 40px rgba(15, 23, 42, .18);
+  }
+
+  .modal-content h3 {
+    color: #111827;
+  }
+
+  .modal-content ion-item {
+    --background: #f1f5f9;
+  }
+
+  .section-header {
+    color: #111827;
+  }
+
+  .ministerio-card {
+    background: #f8fafc;
+    border: 1px solid rgba(17, 24, 39, .06);
+  }
+
+  ion-select {
+    color: #111827;
+  }
+
+  ion-checkbox {
+    --checkbox-background: #ffffff;
+    --border-color: #cbd5e1;
+  }
+
+  ion-text,
+  .vazio {
+    color: #6b7280;
+  }
+}
+
+/* ===================== */
+/* Animação */
+/* ===================== */
+
+ion-item,
+.modal-content{
+
+  animation:fadeUp .3s ease;
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(12px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}

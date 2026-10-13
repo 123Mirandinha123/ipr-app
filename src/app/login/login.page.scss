@@ -1,0 +1,146 @@
+ion-content {
+  --background: url("/assets/icon/fundoipr.png") no-repeat center center / cover;
+}
+
+.login-wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  backdrop-filter: brightness(0.95);
+}
+
+.logo {
+  width: 180px;
+  margin-bottom: 40px;
+  animation: logoEntrada 1.2s ease-out, logoFlutuar 4s ease-in-out infinite 1.2s;
+}
+
+@keyframes logoEntrada {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px) scale(.8);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(8px) scale(1.05);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes logoFlutuar {
+  0%,100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  background: rgba(255, 255, 255, 0.90);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+  backdrop-filter: blur(10px);
+}
+
+ion-item {
+  --background: transparent;
+  --border-color: #d4af37;
+  --highlight-color-focused: #d4af37;
+  --color: #333;
+  --padding-start: 0;
+  margin-bottom: 18px;
+}
+
+ion-input {
+  --color: #333;
+  --placeholder-color: #888;
+}
+
+ion-button {
+  margin-top: 20px;
+  --background: #d4af37;
+  --background-hover: #c29a2f;
+  --background-activated: #b68d27;
+  --border-radius: 12px;
+  height: 48px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #fff;
+  text-transform: none;
+}
+
+.erro {
+  text-align: center;
+  margin: 12px 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+ion-spinner {
+  color: white;
+}
+
+/* ========================= */
+/*        TEMA ESCURO        */
+/* ========================= */
+
+@media (prefers-color-scheme: dark) {
+
+  .login-wrapper {
+    backdrop-filter: brightness(.75);
+  }
+
+  .login-card {
+    background: rgba(20, 20, 20, .82);
+    border: 1px solid rgba(212, 175, 55, .35);
+    box-shadow: 0 15px 40px rgba(0,0,0,.6);
+  }
+
+  ion-item {
+    --background: rgba(255,255,255,.06);
+    --border-color: rgba(212,175,55,.6);
+    --color: #ffffff;
+    border-radius: 12px;
+  }
+
+  ion-input {
+    --color: #ffffff;
+    --placeholder-color: #bdbdbd;
+  }
+
+  ion-button {
+    --background: linear-gradient(135deg, #d4af37, #b8860b);
+    --background-hover: #d8b84d;
+    --background-activated: #b8860b;
+    color: #fff;
+  }
+
+  .erro {
+    color: #ff8c8c;
+  }
+}
+
+/* ========================= */
+
+@media (max-width: 480px) {
+  .logo {
+    width: 150px;
+    margin-bottom: 30px;
+  }
+
+  .login-card {
+    padding: 20px;
+  }
+}

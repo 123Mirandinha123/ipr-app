@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ng-container *ngIf="usuario; else semSessao">
+    <div class="perfil-header">
+      <ion-avatar class="perfil-avatar">
+        <span class="avatar-text">{{ usuario.nome.substring(0, 1) }}</span>
+      </ion-avatar>
+      <h3 class="perfil-nome">{{ usuario.nome }}</h3>
+      <p class="perfil-email">{{ usuario.email }}</p>
+      <div class="badges">
+        <ion-badge *ngIf="isAdmin" color="warning">Admin</ion-badge>
+        <ion-badge *ngIf="isLeader" color="success">Líder</ion-badge>
+      </div>
+    </div>
+
+    <ion-list class="ministerios-lista">
+      <ion-item-divider>
+        <ion-label>Ministérios</ion-label>
+      </ion-item-divider>
+      <ion-item *ngFor="let m of usuario.ministerios" lines="none">
+        <ion-label class="ministerio-item">
+          <strong>{{ formatarMinisterio(m.nome) }}</strong>
+          <span *ngIf="m.lider" class="lider-badge">Líder</span>
+          <p *ngIf="m.funcoes?.length" class="funcoes-text">{{ m.funcoes.join(', ') }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-button expand="full" color="danger" (click)="logout()">
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      Sair
+    </ion-button>
+  </ng-container>
+
+  <ng-template #semSessao>
+    <p>Nenhum usuário logado.</p>
+  </ng-template>
+</ion-content>

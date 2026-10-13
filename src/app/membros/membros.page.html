@@ -1,0 +1,157 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button *ngIf="view === 'list'" defaultHref="/home"></ion-back-button>
+      <ion-button *ngIf="view === 'members'" fill="clear" (click)="voltar()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ titulo }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ng-container *ngIf="view === 'list'; else membersView">
+    <ion-button expand="full" (click)="abrirModal()">
+      Adicionar Membro
+    </ion-button>
+
+    <ng-container *ngIf="ministerios.length > 0; else vazio">
+      <p class="info-text">
+        Selecione um ministério para gerenciar seus membros
+      </p>
+      <ion-list>
+        <ion-item *ngFor="let m of ministerios" button (click)="abrirPorMinisterio(m.chave)" detail>
+          <ion-label>
+            <h2>{{ m.nome }}</h2>
+            <p style="font-size:0.8em;color:var(--ion-color-medium);">
+              {{ m.qtd }} membro(s)
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+
+    <ng-template #vazio>
+      <p style="text-align:center;color:var(--ion-color-medium);margin-top:32px;">
+        Nenhum ministério disponível
+      </p>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #membersView>
+    <ion-button expand="full" (click)="abrirModal()">
+      Adicionar Membro
+    </ion-button>
+
+    <ion-list>
+      <ion-item-sliding *ngFor="let usuario of usuarios">
+        <ion-item>
+          <ion-label>
+            <h2>{{ usuario.nome }}</h2>
+            <p>{{ usuario.email }}</p>
+            <p class="ministerios-lista">{{ getMinisterios(usuario) }}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option color="warning" (click)="removerDoMinisterio(usuario)">
+            Remover
+          </ion-item-option>
+          <ion-item-option color="primary" (click)="abrirEditar(usuario)">
+            Editar
+          </ion-item-option>
+          <ion-item-option color="danger" (click)="excluir(usuario)">
+            Excluir
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+    <ion-text *ngIf="usuarios.length === 0" class="ion-text-center">
+      <p>Nenhum membro cadastrado</p>
+    </ion-text>
+  </ng-template>
+
+  <!-- Modal -->
+  <div class="modal-overlay" *ngIf="showModal" (click)="fecharModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>{{ editando ? 'Editar Membro' : 'Novo Membro' }}</h3>
+
+      <ion-item>
+        <ion-input
+          label="Nome"
+          labelPlacement="stacked"
+          [(ngModel)]="novoNome"
+          placeholder="Nome completo"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          label="Email"
+          labelPlacement="stacked"
+          type="email"
+          [(ngModel)]="novoEmail"
+          placeholder="email@email.com"
+          [disabled]="editando"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          [label]="editando ? 'Nova senha (deixe vazio para manter)' : 'Senha'"
+          labelPlacement="stacked"
+          type="password"
+          [(ngModel)]="novaSenha"
+          placeholder="Senha"
+        ></ion-input>
+      </ion-item>
+
+      <div class="ministerios-section">
+        <div class="section-header">
+          <strong>{{ modoMinisterioTravado ? 'Ministério: ' + ministerioAtualNome : 'Ministérios' }}</strong>
+          <ion-button *ngIf="!modoMinisterioTravado" size="small" fill="clear" (click)="adicionarMinisterio()">
+            + Adicionar
+          </ion-button>
+        </div>
+
+        <div *ngFor="let min of ministeriosForm; let i = index" class="ministerio-card">
+          <div class="ministerio-header" *ngIf="!modoMinisterioTravado">
+            <ion-select [(ngModel)]="min.nome" interface="popover">
+              <ion-select-option *ngFor="let m of ministeriosDisponiveis" [value]="m">
+                {{ m | titlecase }}
+              </ion-select-option>
+            </ion-select>
+            <ion-button size="small" fill="clear" color="danger" (click)="removerMinisterio(i)">
+              Remover
+            </ion-button>
+          </div>
+
+          <ion-checkbox [(ngModel)]="min.lider">Líder</ion-checkbox>
+
+          <div class="funcoes-grid">
+            <ion-checkbox
+              *ngFor="let funcao of funcoesDisponiveis[min.nome]"
+              [checked]="hasFuncao(min, funcao)"
+              (ionChange)="toggleFuncao(min, funcao)"
+            >
+              {{ funcao }}
+            </ion-checkbox>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <ion-button fill="clear" (click)="fecharModal()">Cancelar</ion-button>
+        <ion-button expand="full" (click)="salvar()">
+          {{ editando ? 'Salvar' : 'Criar' }}
+        </ion-button>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

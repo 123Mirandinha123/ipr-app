@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Indisponibilidades</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ng-container *ngIf="ministerios.length > 0; else vazio">
+
+    <p class="info-text">
+      Selecione um ministério para gerenciar suas indisponibilidades
+    </p>
+
+    <ion-list>
+
+      <ion-item
+        *ngFor="let m of ministerios"
+        button
+        detail
+        (click)="abrirPorMinisterio(m.chave)"
+      >
+        <ion-label>
+
+          <h2>{{ m.nome }}</h2>
+
+          <p class="quantidade">
+            {{ m.qtd }} indisponibilidade(s)
+          </p>
+
+        </ion-label>
+
+      </ion-item>
+
+    </ion-list>
+
+  </ng-container>
+
+  <ng-template #vazio>
+
+    <p class="vazio">
+      Nenhum ministério disponível
+    </p>
+
+  </ng-template>
+
+</ion-content>

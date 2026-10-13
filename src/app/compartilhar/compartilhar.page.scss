@@ -1,0 +1,158 @@
+/* ===================== */
+/* Tema */
+/* ===================== */
+
+ion-content {
+  --background: #0b0b0b;
+}
+
+ion-toolbar {
+  --background: #111827;
+  --color: #ffffff;
+  border-bottom: 1px solid rgba(33, 150, 243, .25);
+}
+
+ion-title {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+ion-back-button,
+ion-menu-button {
+  --color: #42a5f5;
+}
+
+/* ===================== */
+/* Texto superior */
+/* ===================== */
+
+.info-text {
+  color: #9ca3af;
+  font-size: 14px;
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+/* ===================== */
+/* Lista */
+/* ===================== */
+
+ion-list {
+  background: transparent;
+}
+
+ion-item {
+  --background: #151515;
+  --color: #ffffff;
+  --padding-start: 18px;
+  --inner-padding-end: 18px;
+  --min-height: 72px;
+  margin-bottom: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(33, 150, 243, .12);
+  transition: .25s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+  animation: aparecer .3s ease;
+}
+
+ion-item:hover {
+  --background: #1d2738;
+  transform: translateY(-2px);
+  border-color: rgba(66, 165, 245, .35);
+}
+
+ion-label h2 {
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.quantidade {
+  color: #42a5f5;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* ===================== */
+/* Botões */
+/* ===================== */
+
+ion-button {
+  --border-radius: 12px;
+  text-transform: none;
+  font-weight: 600;
+}
+
+/* ===================== */
+/* Estado vazio */
+/* ===================== */
+
+.vazio {
+  text-align: center;
+  color: #8b8b8b;
+  margin-top: 40px;
+  font-size: 15px;
+}
+
+/* ===================== */
+/* Tema claro */
+/* ===================== */
+
+@media (prefers-color-scheme: light) {
+
+  ion-content {
+    --background: #f3f5f9;
+  }
+
+  ion-toolbar {
+    --background: #ffffff;
+    --color: #111827;
+    border-bottom: 1px solid rgba(21, 101, 192, .15);
+  }
+
+  ion-title {
+    color: #111827;
+  }
+
+  .info-text {
+    color: #4b5563;
+  }
+
+  ion-item {
+    --background: #ffffff;
+    --color: #111827;
+    border: 1px solid rgba(21, 101, 192, .12);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, .08);
+  }
+
+  ion-item:hover {
+    --background: #eef1f6;
+  }
+
+  ion-label h2 {
+    color: #111827;
+  }
+
+  .vazio {
+    color: #6b7280;
+  }
+}
+
+/* ===================== */
+/* Animação */
+/* ===================== */
+
+@keyframes aparecer {
+
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}

@@ -1,0 +1,278 @@
+ion-content {
+  --background: #0b0b0b;
+}
+
+
+/* Toolbar */
+ion-toolbar {
+  --background: #0b0b0b;
+  --color: #ffffff;
+
+  border-bottom: 1px solid rgba(33,150,243,.25);
+}
+
+ion-title {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+ion-back-button,
+ion-menu-button {
+  --color: #2196f3;
+}
+
+
+/* Cards das escalas */
+ion-card {
+  background: #151515;
+  border-radius: 16px;
+
+  margin: 16px 0;
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.35);
+
+  animation: aparecer .35s ease;
+}
+
+
+/* Cabeçalho do card */
+ion-card-header {
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid rgba(33,150,243,.15);
+}
+
+
+ion-card-title {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+
+/* Turno */
+ion-card-title span {
+  color: #2196f3 !important;
+}
+
+
+/* Conteúdo */
+ion-card-content {
+  padding-top: 18px;
+}
+
+
+/* Pessoas e funções */
+.funcao-linha {
+  color: #e0e0e0;
+
+  font-size: 15px;
+
+  margin: 12px 0;
+
+  padding-left: 12px;
+
+  border-left: 3px solid #2196f3;
+
+  line-height: 1.5;
+}
+
+/* Cargos vagos */
+.funcao-vaga {
+  color: #6b7280;
+
+  font-size: 15px;
+
+  font-style: italic;
+
+  margin: 12px 0;
+
+  padding-left: 12px;
+
+  border-left: 3px solid transparent;
+
+  line-height: 1.5;
+}
+
+
+/* Botões editar/excluir */
+ion-button {
+  --border-radius: 10px;
+
+  height: 38px;
+
+  font-weight: 600;
+
+  text-transform: none;
+
+  margin-top: 15px;
+}
+
+
+/* Editar */
+ion-button[color="primary"] {
+  --background: #1565c0;
+  --color: white;
+}
+
+
+/* Excluir */
+ion-button[color="danger"] {
+  --background: #b71c1c;
+  --color: white;
+}
+
+
+/* Nenhuma escala */
+ion-text {
+  display: block;
+
+  text-align: center;
+
+  margin-top: 40px;
+
+  color: #aaa;
+}
+
+
+/* Botão criar escala */
+.botoes-criar {
+  margin-top: 25px;
+}
+
+
+.botoes-criar ion-button {
+  height: 50px;
+
+  --background: #1565c0;
+
+  --border-radius: 14px;
+
+  font-size: 16px;
+}
+
+
+/* ========================= */
+/*        TEMA CLARO         */
+/* ========================= */
+
+@media (prefers-color-scheme: light) {
+
+  ion-content {
+    --background: #f3f5f9;
+  }
+
+  ion-toolbar {
+    --background: #ffffff;
+    --color: #111827;
+    border-bottom: 1px solid rgba(21, 101, 192, .15);
+  }
+
+  ion-title {
+    color: #111827;
+  }
+
+  ion-card {
+    background: #ffffff;
+    border: 1px solid rgba(21, 101, 192, .12);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, .08);
+  }
+
+  ion-card-title {
+    color: #111827;
+  }
+
+  .funcao-linha {
+    color: #374151;
+  }
+
+  .funcao-vaga {
+    color: #9ca3af;
+  }
+
+  ion-text {
+    color: #6b7280;
+  }
+}
+
+
+/* ===================== */
+/*       DARK MODE       */
+/* ===================== */
+
+body.dark {
+
+  ion-content {
+    --background: #050505;
+  }
+
+
+  ion-card {
+    background: #111827;
+
+    border-color: rgba(33,150,243,.2);
+  }
+
+
+  ion-card-title {
+    color: #ffffff;
+  }
+
+
+  .funcao-linha {
+    color: #dddddd;
+  }
+
+  .funcao-vaga {
+    color: #6b7280;
+  }
+
+  ion-text {
+    color: #aaa;
+  }
+
+
+  ion-text {
+    color: #aaa;
+  }
+
+}
+
+
+/* ===================== */
+/*      ANIMAÇÃO         */
+/* ===================== */
+
+@keyframes aparecer {
+
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* Celular */
+@media(max-width:480px){
+
+  ion-card {
+    margin: 12px 0;
+  }
+
+
+  ion-button {
+    width: 100%;
+    margin-right: 0;
+  }
+
+}

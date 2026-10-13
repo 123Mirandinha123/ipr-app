@@ -1,0 +1,194 @@
+/* Fundo */
+
+ion-content {
+  --background: #0b0b0b;
+}
+
+/* Toolbar */
+
+ion-toolbar {
+  --background: #111827;
+  --color: #fff;
+  border-bottom: 1px solid rgba(33,150,243,.15);
+}
+
+ion-title {
+  color: white;
+  font-weight: 700;
+}
+
+ion-back-button,
+ion-menu-button {
+  --color: #42a5f5;
+}
+
+/* Lista */
+
+ion-list {
+  background: transparent;
+}
+
+ion-item {
+  --background: #151515;
+  --color: white;
+
+  margin-bottom: 14px;
+
+  border-radius: 16px;
+
+  --padding-start: 18px;
+  --inner-padding-end: 18px;
+  --min-height: 86px;
+
+  border: 1px solid rgba(33,150,243,.12);
+
+  box-shadow: 0 8px 18px rgba(0,0,0,.25);
+
+  transition: .25s ease;
+}
+
+ion-item:hover {
+  --background: #1b1b1b;
+  border-color: rgba(66,165,245,.4);
+  transform: translateY(-2px);
+}
+
+ion-label h2 {
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Linha de informações */
+
+.info-linha{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+/* Badge */
+
+.ministerio-badge{
+
+  background:#1e3a8a;
+  color:white;
+
+  padding:5px 10px;
+
+  border-radius:20px;
+
+  font-size:12px;
+
+  font-weight:600;
+}
+
+/* Data */
+
+.data-text{
+  color:#9ca3af;
+  font-size:13px;
+}
+
+/* Turno */
+
+.turno{
+  color:#42a5f5;
+  font-size:13px;
+}
+
+/* Motivo */
+
+.motivo-text{
+
+  margin-top:10px;
+
+  color:#d1d5db;
+
+  line-height:1.5;
+
+  font-size:14px;
+}
+
+/* Vazio */
+
+.vazio{
+
+  margin-top:60px;
+
+  text-align:center;
+
+  color:#7b7b7b;
+
+  font-size:15px;
+}
+
+/* ========================= */
+/* Tema claro */
+/* ========================= */
+
+@media (prefers-color-scheme: light) {
+
+  ion-content {
+    --background: #f3f5f9;
+  }
+
+  ion-toolbar {
+    --background: #ffffff;
+    --color: #111827;
+    border-bottom: 1px solid rgba(21, 101, 192, .15);
+  }
+
+  ion-title {
+    color: #111827;
+  }
+
+  ion-item {
+    --background: #ffffff;
+    --color: #111827;
+    border: 1px solid rgba(21, 101, 192, .12);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, .08);
+  }
+
+  ion-item:hover {
+    --background: #eef1f6;
+  }
+
+  ion-label h2 {
+    color: #111827;
+  }
+
+  .data-text {
+    color: #6b7280;
+  }
+
+  .motivo-text {
+    color: #374151;
+  }
+
+  .vazio {
+    color: #6b7280;
+  }
+}
+
+/* Animação */
+
+ion-item{
+  animation: aparecer .3s ease;
+}
+
+@keyframes aparecer{
+
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}

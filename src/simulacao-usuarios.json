@@ -1,0 +1,466 @@
+[
+  {
+    "uid": "sim-001",
+    "email": "sim-001@exemplo.com",
+    "nome": "Gabriel Souza",
+    "admin": true,
+    "ministerios": [
+      { "nome": "louvor", "lider": true, "funcoes": ["vocal"] },
+      { "nome": "diaconos", "lider": true, "funcoes": ["diacono"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-002",
+    "email": "sim-002@exemplo.com",
+    "nome": "Ana Souza",
+    "admin": false,
+    "ministerios": [
+      { "nome": "louvor", "lider": false, "funcoes": ["back vocal", "vocal"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-003",
+    "email": "sim-003@exemplo.com",
+    "nome": "Carlos Lima",
+    "admin": false,
+    "ministerios": [
+      { "nome": "louvor", "lider": false, "funcoes": ["guitarrista"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-004",
+    "email": "sim-004@exemplo.com",
+    "nome": "Beatriz Almeida",
+    "admin": false,
+    "ministerios": [
+      { "nome": "louvor", "lider": false, "funcoes": ["back vocal"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-005",
+    "email": "sim-005@exemplo.com",
+    "nome": "Rafael Santos",
+    "admin": false,
+    "ministerios": [
+      { "nome": "louvor", "lider": false, "funcoes": ["baixista"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-006",
+    "email": "sim-006@exemplo.com",
+    "nome": "Fernanda Costa",
+    "admin": false,
+    "ministerios": [
+      { "nome": "louvor", "lider": false, "funcoes": ["vocal", "back vocal"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-007",
+    "email": "sim-007@exemplo.com",
+    "nome": "Lucas Pereira",
+    "admin": false,
+    "ministerios": [
+      { "nome": "louvor", "lider": false, "funcoes": ["baterista"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-008",
+    "email": "sim-008@exemplo.com",
+    "nome": "Mariana Oliveira",
+    "admin": false,
+    "ministerios": [
+      { "nome": "louvor", "lider": false, "funcoes": ["tecladista"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-009",
+    "email": "sim-009@exemplo.com",
+    "nome": "João Martins",
+    "admin": false,
+    "ministerios": [
+      { "nome": "louvor", "lider": false, "funcoes": ["vionolista"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-010",
+    "email": "sim-010@exemplo.com",
+    "nome": "Camila Rodrigues",
+    "admin": false,
+    "ministerios": [
+      { "nome": "louvor", "lider": false, "funcoes": ["back vocal", "vocal"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-011",
+    "email": "sim-011@exemplo.com",
+    "nome": "Pedro Rocha",
+    "admin": false,
+    "ministerios": [
+      { "nome": "midia", "lider": true, "funcoes": ["mídia"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-012",
+    "email": "sim-012@exemplo.com",
+    "nome": "Larissa Ferreira",
+    "admin": false,
+    "ministerios": [
+      { "nome": "midia", "lider": false, "funcoes": ["mídia"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-013",
+    "email": "sim-013@exemplo.com",
+    "nome": "Tiago Prado",
+    "admin": false,
+    "ministerios": [
+      { "nome": "renoshow", "lider": true, "funcoes": ["renoshow"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-014",
+    "email": "sim-014@exemplo.com",
+    "nome": "Vanessa Gomes",
+    "admin": false,
+    "ministerios": [
+      { "nome": "renoshow", "lider": false, "funcoes": ["renoshow"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-015",
+    "email": "sim-015@exemplo.com",
+    "nome": "Felipe Barbosa",
+    "admin": false,
+    "ministerios": [
+      { "nome": "maternal", "lider": true, "funcoes": ["professor", "auxiliar"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-016",
+    "email": "sim-016@exemplo.com",
+    "nome": "Juliana Ribeiro",
+    "admin": false,
+    "ministerios": [
+      { "nome": "maternal", "lider": false, "funcoes": ["professor", "auxiliar"] }
+    ],
+    "indisponibilidades": [
+      { "ministerio": "maternal", "data": "2026-08-09", "turno": "noite", "motivo": "Compromisso pessoal" }
+    ]
+  },
+  {
+    "uid": "sim-017",
+    "email": "sim-017@exemplo.com",
+    "nome": "André Castro",
+    "admin": false,
+    "ministerios": [
+      { "nome": "4a6", "lider": true, "funcoes": ["professor", "auxiliar"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-018",
+    "email": "sim-018@exemplo.com",
+    "nome": "Patrícia Mendes",
+    "admin": false,
+    "ministerios": [
+      { "nome": "4a6", "lider": false, "funcoes": ["professor", "auxiliar"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-019",
+    "email": "sim-019@exemplo.com",
+    "nome": "Bruno Carvalho",
+    "admin": false,
+    "ministerios": [
+      { "nome": "7a10", "lider": true, "funcoes": ["professor"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-020",
+    "email": "sim-020@exemplo.com",
+    "nome": "Renata Silva",
+    "admin": false,
+    "ministerios": [
+      { "nome": "juniores", "lider": true, "funcoes": ["professor"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-021",
+    "email": "sim-021@exemplo.com",
+    "nome": "Marcelo Prado",
+    "admin": false,
+    "ministerios": [
+      { "nome": "adolescentes", "lider": true, "funcoes": ["professor"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-022",
+    "email": "sim-022@exemplo.com",
+    "nome": "Carla Dias",
+    "admin": false,
+    "ministerios": [
+      { "nome": "sonoplastia", "lider": true, "funcoes": ["sonoplasta"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-023",
+    "email": "sim-023@exemplo.com",
+    "nome": "Diego Moraes",
+    "admin": false,
+    "ministerios": [
+      { "nome": "sonoplastia", "lider": false, "funcoes": ["sonoplasta"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-024",
+    "email": "sim-024@exemplo.com",
+    "nome": "Amanda Teixeira",
+    "admin": false,
+    "ministerios": [
+      { "nome": "midia", "lider": false, "funcoes": ["mídia"] },
+      { "nome": "louvor", "lider": false, "funcoes": ["vocal"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-025",
+    "email": "sim-025@exemplo.com",
+    "nome": "Gustavo Campos",
+    "admin": false,
+    "ministerios": [
+      { "nome": "midia", "lider": false, "funcoes": ["mídia"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-026",
+    "email": "sim-026@exemplo.com",
+    "nome": "Letícia Araújo",
+    "admin": false,
+    "ministerios": [
+      { "nome": "midia", "lider": false, "funcoes": ["mídia"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-027",
+    "email": "sim-027@exemplo.com",
+    "nome": "Thiago Freitas",
+    "admin": false,
+    "ministerios": [
+      { "nome": "renoshow", "lider": false, "funcoes": ["renoshow"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-028",
+    "email": "sim-028@exemplo.com",
+    "nome": "Jéssica Pinto",
+    "admin": false,
+    "ministerios": [
+      { "nome": "renoshow", "lider": false, "funcoes": ["renoshow"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-029",
+    "email": "sim-029@exemplo.com",
+    "nome": "Vinícius Rocha",
+    "admin": false,
+    "ministerios": [
+      { "nome": "maternal", "lider": false, "funcoes": ["auxiliar"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-030",
+    "email": "sim-030@exemplo.com",
+    "nome": "Isabela Castro",
+    "admin": false,
+    "ministerios": [
+      { "nome": "maternal", "lider": false, "funcoes": ["professor", "auxiliar"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-031",
+    "email": "sim-031@exemplo.com",
+    "nome": "Davi Oliveira",
+    "admin": false,
+    "ministerios": [
+      { "nome": "maternal", "lider": false, "funcoes": ["auxiliar"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-032",
+    "email": "sim-032@exemplo.com",
+    "nome": "Sofia Martins",
+    "admin": false,
+    "ministerios": [
+      { "nome": "4a6", "lider": false, "funcoes": ["auxiliar"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-033",
+    "email": "sim-033@exemplo.com",
+    "nome": "Gabriel Lima",
+    "admin": false,
+    "ministerios": [
+      { "nome": "4a6", "lider": false, "funcoes": ["professor", "auxiliar"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-034",
+    "email": "sim-034@exemplo.com",
+    "nome": "Marina Lima",
+    "admin": false,
+    "ministerios": [
+      { "nome": "7a10", "lider": false, "funcoes": ["professor"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-035",
+    "email": "sim-035@exemplo.com",
+    "nome": "Rodrigo Alves",
+    "admin": false,
+    "ministerios": [
+      { "nome": "7a10", "lider": false, "funcoes": ["professor"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-036",
+    "email": "sim-036@exemplo.com",
+    "nome": "Camila Fernandes",
+    "admin": false,
+    "ministerios": [
+      { "nome": "juniores", "lider": false, "funcoes": ["professor"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-037",
+    "email": "sim-037@exemplo.com",
+    "nome": "Rafaela Souza",
+    "admin": false,
+    "ministerios": [
+      { "nome": "juniores", "lider": false, "funcoes": ["professor"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-038",
+    "email": "sim-038@exemplo.com",
+    "nome": "Eduardo Rocha",
+    "admin": false,
+    "ministerios": [
+      { "nome": "adolescentes", "lider": false, "funcoes": ["professor"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-039",
+    "email": "sim-039@exemplo.com",
+    "nome": "Helena Moraes",
+    "admin": false,
+    "ministerios": [
+      { "nome": "adolescentes", "lider": false, "funcoes": ["professor"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-040",
+    "email": "sim-040@exemplo.com",
+    "nome": "Paulo Henrique",
+    "admin": false,
+    "ministerios": [
+      { "nome": "sonoplastia", "lider": false, "funcoes": ["sonoplasta"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-041",
+    "email": "sim-041@exemplo.com",
+    "nome": "Antônio Silva",
+    "admin": false,
+    "ministerios": [
+      { "nome": "diaconos", "lider": false, "funcoes": ["diacono"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-042",
+    "email": "sim-042@exemplo.com",
+    "nome": "Francisco Lima",
+    "admin": false,
+    "ministerios": [
+      { "nome": "diaconos", "lider": false, "funcoes": ["diacono"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-043",
+    "email": "sim-043@exemplo.com",
+    "nome": "Marcos Pereira",
+    "admin": false,
+    "ministerios": [
+      { "nome": "diaconos", "lider": false, "funcoes": ["diacono"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-044",
+    "email": "sim-044@exemplo.com",
+    "nome": "José Santos",
+    "admin": false,
+    "ministerios": [
+      { "nome": "diaconos", "lider": false, "funcoes": ["diacono"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-045",
+    "email": "sim-045@exemplo.com",
+    "nome": "Roberto Costa",
+    "admin": false,
+    "ministerios": [
+      { "nome": "diaconos", "lider": false, "funcoes": ["diacono"] }
+    ],
+    "indisponibilidades": []
+  },
+  {
+    "uid": "sim-046",
+    "email": "sim-046@exemplo.com",
+    "nome": "Carlos Eduardo",
+    "admin": false,
+    "ministerios": [
+      { "nome": "diaconos", "lider": false, "funcoes": ["diacono"] }
+    ],
+    "indisponibilidades": []
+  }
+]

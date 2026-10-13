@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">app-ipr</string>
+    <string name="title_activity_main">app-ipr</string>
+    <string name="package_name">com.ipr.app</string>
+    <string name="custom_url_scheme">com.ipr.app</string>
+</resources>

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Minhas Escalas</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ng-container *ngIf="escalas.length > 0; else vazio">
+    <ion-list>
+      <ion-item *ngFor="let e of escalas" lines="full">
+        <ion-label>
+          <h2>
+            <span class="pill-ministerio" [style.background]="corMinisterio(e.ministerio)">
+              {{ formatarMinisterio(e.ministerio) }}
+            </span>
+          </h2>
+          <p class="data-text">
+            {{ formatarData(e.data) }}
+            <span *ngIf="e.turno" style="font-size:0.85em;color:var(--ion-color-primary);margin-left:4px;">
+              ({{ e.turno === 'manha' ? 'Manhã' : 'Noite' }})
+            </span>
+          </p>
+          <p class="nome-text">{{ e.nome }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
+  <ng-template #vazio>
+    <p class="vazio">Você não está em nenhuma escala.</p>
+  </ng-template>
+</ion-content>

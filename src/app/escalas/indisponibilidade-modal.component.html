@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Indisponibilidades</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="calendar-nav">
+    <ion-button fill="clear" (click)="prevMonth()">&lt;</ion-button>
+    <span class="month-title">{{ monthName() }} {{ currentYear }}</span>
+    <ion-button fill="clear" (click)="nextMonth()">&gt;</ion-button>
+  </div>
+
+  <div class="calendar-grid">
+    <div class="calendar-weekday" *ngFor="let wd of weekDays">{{ wd }}</div>
+    <div class="calendar-day empty" *ngFor="let _ of emptyCells"></div>
+    <div
+      class="calendar-day"
+      *ngFor="let day of daysInMonth"
+      [class.selectable]="isSelectable(day)"
+      [class.selected]="hasSelecao(day) && !isDomingo(day)"
+      [class.disabled]="!isSelectable(day)"
+      (click)="toggleDay(day)"
+    >
+      {{ day }}
+      <div class="turno-indicators" *ngIf="isDomingo(day) && isSelectable(day)">
+        <span class="turno-dot" [class.active]="hasTurno(day, 'manha')" title="Manhã"></span>
+        <span class="turno-dot" [class.active]="hasTurno(day, 'noite')" title="Noite"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ion-padding-top">
+    <ng-container *ngIf="selectedCount > 0">
+      <p style="color: var(--ion-color-medium); font-size: 0.9em;">
+        {{ selectedCount }} selecionado(s)
+      </p>
+      <div class="selected-items">
+        <div class="selected-item" *ngFor="let item of selectedItems">
+          <span>{{ formatSelectedItem(item) }}</span>
+          <ion-button fill="clear" color="danger" size="small" (click)="toggleItem(item.data, item.turno)">
+            Remover
+          </ion-button>
+        </div>
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">Motivo</ion-label>
+        <ion-input [(ngModel)]="motivo" placeholder="Ex: Viagem, compromisso..."></ion-input>
+      </ion-item>
+    </ng-container>
+
+    <ion-button expand="block" color="primary" (click)="confirm()">
+      Confirmar
+    </ion-button>
+  </div>
+</ion-content>

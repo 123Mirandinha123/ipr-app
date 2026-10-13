@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Compartilhar Escalas</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <p class="info-text">
+    Compartilhe as escalas de {{ tituloMes }}. Cada ministério é enviado em uma mensagem separada.
+  </p>
+
+  <ion-button *ngIf="isAdmin && grupos.length > 0" expand="full" color="success" (click)="compartilharTudo()">
+    <ion-icon slot="start" name="logo-whatsapp"></ion-icon>
+    Compartilhar tudo
+  </ion-button>
+
+  <ion-list *ngIf="grupos.length > 0">
+    <ion-item *ngFor="let grupo of grupos">
+      <ion-label>
+        <h2>{{ grupo.nome }}</h2>
+        <p class="quantidade">{{ grupo.escalas.length }} escala(s) no mês</p>
+      </ion-label>
+      <ion-button slot="end" fill="clear" color="success" (click)="compartilharMinisterio(grupo)">
+        <ion-icon slot="icon-only" name="logo-whatsapp"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <div class="vazio" *ngIf="!carregando && grupos.length === 0">
+    <p>Nenhuma escala encontrada para {{ tituloMes }}.</p>
+  </div>
+
+</ion-content>

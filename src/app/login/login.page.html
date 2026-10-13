@@ -1,0 +1,55 @@
+<ion-content style="--background: url('assets/icon/fundoipr.png') no-repeat center center / cover;">
+  <div class="login-wrapper">
+    <img src="assets/LogoDourado.png" alt="Logo IPR" class="logo" />
+
+    <div class="login-card">
+      <ion-item>
+        <ion-input
+          label="Email"
+          labelPlacement="stacked"
+          type="email"
+          [(ngModel)]="email"
+          placeholder="seu@email.com"
+          autocomplete="email"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          label="Senha"
+          labelPlacement="stacked"
+          [type]="mostrarSenha ? 'text' : 'password'"
+          [(ngModel)]="senha"
+          placeholder="Sua senha"
+          autocomplete="current-password"
+        >
+          <ion-button
+            slot="end"
+            fill="clear"
+            size="small"
+            (click)="mostrarSenha = !mostrarSenha"
+            aria-label="Mostrar ou esconder senha"
+          >
+            <ion-icon
+              slot="icon-only"
+              [name]="mostrarSenha ? 'eye-off-outline' : 'eye-outline'"
+            ></ion-icon>
+          </ion-button>
+        </ion-input>
+      </ion-item>
+
+      <ion-text color="danger" *ngIf="erro">
+        <p class="erro">{{ erro }}</p>
+      </ion-text>
+
+      <ion-button
+        expand="full"
+        (click)="login()"
+        [disabled]="carregando"
+      >
+        <ion-spinner *ngIf="carregando" name="crescent"></ion-spinner>
+        <span *ngIf="!carregando">Entrar</span>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

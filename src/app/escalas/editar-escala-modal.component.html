@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Editar Escala</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2>
+    {{ formatarData(escala.data) }}
+    <span *ngIf="escala.turno" style="font-size:0.8em;color:var(--ion-color-primary);font-weight:400;">
+      {{ escala.turno === 'manha' ? 'Manhã' : 'Noite' }}
+    </span>
+    - {{ ministerio | titlecase }}
+  </h2>
+
+  <ion-list>
+    <ng-container *ngIf="!isLouvor">
+      <ion-item *ngFor="let nome of currentLideres">
+        <ion-label>{{ nome | uppercase }}</ion-label>
+        <ion-button slot="end" fill="clear" color="danger" size="small" (click)="removePessoa(nome, 'lider')">
+          Remover
+        </ion-button>
+      </ion-item>
+
+      <ion-item *ngFor="let nome of currentMembros">
+        <ion-label>{{ nome | uppercase }}</ion-label>
+        <ion-button slot="end" fill="clear" color="danger" size="small" (click)="removePessoa(nome, 'membro')">
+          Remover
+        </ion-button>
+      </ion-item>
+      <ion-item button class="add-item" *ngFor="let p of getDisponiveis('membro')" (click)="addPessoa(p.nome, 'membro')">
+        <ion-label>+ Adicionar {{ p.nome | uppercase }} na escala</ion-label>
+      </ion-item>
+    </ng-container>
+
+    <ng-container *ngFor="let funcao of getFuncoesKeys()">
+      <div class="section-label">{{ funcao | titlecase }}</div>
+      <ion-item *ngFor="let nome of currentFuncoes[funcao]">
+        <ion-label>{{ nome | uppercase }}</ion-label>
+        <ion-button slot="end" fill="clear" color="danger" size="small" (click)="removePessoa(nome, funcao)">
+          Remover
+        </ion-button>
+      </ion-item>
+      <ion-item button class="add-item" *ngFor="let p of getDisponiveis(funcao)" (click)="addPessoa(p.nome, funcao)">
+        <ion-label>+ Adicionar {{ p.nome | uppercase }} como {{ funcao | titlecase }}</ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+
+  <div class="ion-padding-top">
+    <ion-button expand="block" color="primary" (click)="save()">
+      Salvar
+    </ion-button>
+  </div>
+</ion-content>

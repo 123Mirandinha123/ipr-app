@@ -1,0 +1,217 @@
+ion-content {
+  --background: #0b0b0b;
+}
+
+/* ===================== */
+/* Toolbar */
+/* ===================== */
+
+ion-toolbar {
+  --background: #111827;
+  --color: #ffffff;
+  border-bottom: 1px solid rgba(33, 150, 243, .25);
+}
+
+ion-title {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+ion-back-button,
+ion-menu-button {
+  --color: #42a5f5;
+}
+
+/* ===================== */
+/* Lista */
+/* ===================== */
+
+ion-list {
+  background: transparent;
+  padding: 0;
+}
+
+ion-item {
+  --background: #151515;
+  --color: #ffffff;
+
+  margin-bottom: 14px;
+
+  border-radius: 16px;
+
+  border: 1px solid rgba(33,150,243,.15);
+
+  --padding-start: 18px;
+  --inner-padding-end: 18px;
+  --min-height: 88px;
+
+  transition: .25s ease;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,.30);
+
+  animation: aparecer .35s ease;
+}
+
+ion-item:hover {
+  --background: #1c2433;
+  transform: translateY(-2px);
+}
+
+/* ===================== */
+/* Ministério */
+/* ===================== */
+
+.pill-ministerio {
+
+  display: inline-block;
+
+  padding: 6px 14px;
+
+  border-radius: 30px;
+
+  color: white;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  letter-spacing: .3px;
+
+  margin-bottom: 10px;
+}
+
+/* ===================== */
+/* Textos */
+/* ===================== */
+
+h2 {
+  margin: 0 0 10px;
+}
+
+.data-text {
+
+  color: #42a5f5;
+
+  font-size: 14px;
+
+  margin: 6px 0;
+}
+
+.nome-text {
+
+  color: #e5e5e5;
+
+  font-size: 15px;
+
+  margin-top: 8px;
+
+  font-weight: 500;
+}
+
+/* ===================== */
+/* Sem escalas */
+/* ===================== */
+
+.vazio {
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  height: 70vh;
+
+  color: #8b8b8b;
+
+  font-size: 16px;
+
+  text-align: center;
+}
+
+/* ===================== */
+/* Tema claro */
+/* ===================== */
+
+@media (prefers-color-scheme: light) {
+
+  ion-content {
+    --background: #f3f5f9;
+  }
+
+  ion-toolbar {
+    --background: #ffffff;
+    --color: #111827;
+    border-bottom: 1px solid rgba(21, 101, 192, .15);
+  }
+
+  ion-title {
+    color: #111827;
+  }
+
+  ion-item {
+    --background: #ffffff;
+    --color: #111827;
+    border: 1px solid rgba(21, 101, 192, .12);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, .08);
+  }
+
+  ion-item:hover {
+    --background: #eef1f6;
+  }
+
+  .nome-text {
+    color: #374151;
+  }
+
+  .vazio {
+    color: #6b7280;
+  }
+}
+
+/* ===================== */
+/* Scroll */
+/* ===================== */
+
+ion-content::part(scroll) {
+  padding-bottom: 20px;
+}
+
+/* ===================== */
+/* Animação */
+/* ===================== */
+
+@keyframes aparecer {
+
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+/* ===================== */
+/* Mobile */
+/* ===================== */
+
+@media (max-width: 480px) {
+
+  ion-item {
+    --min-height: 82px;
+  }
+
+  .pill-ministerio {
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+
+  .nome-text {
+    font-size: 14px;
+  }
+
+}

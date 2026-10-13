@@ -1,0 +1,53 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function perfil(uid) {
+      return exists(/databases/$(database)/documents/usuarios/$(uid))
+        ? get(/databases/$(database)/documents/usuarios/$(uid)).data
+        : {};
+    }
+
+    function eAdmin() {
+      return signedIn() && perfil(request.auth.uid).admin == true;
+    }
+
+    function eLider() {
+      return signedIn() && perfil(request.auth.uid).lider == true;
+    }
+
+    match /usuarios/{uid} {
+      allow read: if signedIn();
+
+      allow create: if eAdmin() ||
+        (eLider() && request.resource.data.admin != true && request.resource.data.lider != true);
+
+      allow update: if eAdmin() ||
+        (eLider() && request.resource.data.admin == resource.data.admin &&
+                    request.resource.data.lider == resource.data.lider) ||
+        (signedIn() && request.auth.uid == uid &&
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['indisponibilidades']));
+
+      allow delete: if eAdmin() || eLider();
+    }
+
+    match /escalas/{id} {
+      allow read: if signedIn();
+      allow write: if eAdmin();
+    }
+
+    match /familias/{id} {
+      allow read: if signedIn();
+      allow write: if eAdmin() || eLider();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,300 @@
+ion-content {
+  --background: #0b0b0b;
+}
+
+/* Toolbar */
+
+ion-toolbar {
+  --background: #111827;
+  --color: #ffffff;
+  border-bottom: 1px solid rgba(33,150,243,.25);
+}
+
+ion-title {
+  font-weight: 700;
+  color: white;
+}
+
+ion-back-button,
+ion-menu-button {
+  --color: #42a5f5;
+}
+
+/* ====================== */
+/* Perfil */
+/* ====================== */
+
+.perfil-header {
+
+  background: #151515;
+
+  border-radius: 18px;
+
+  padding: 30px 20px;
+
+  margin-bottom: 25px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 1px solid rgba(33,150,243,.18);
+
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+
+.perfil-avatar {
+
+  width: 95px;
+  height: 95px;
+
+  margin-bottom: 18px;
+
+  background: linear-gradient(135deg,#1565c0,#42a5f5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 10px 25px rgba(33,150,243,.30);
+}
+
+.avatar-text {
+  color: white;
+  font-size: 38px;
+  font-weight: bold;
+}
+
+.perfil-nome {
+  margin: 0;
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.perfil-email {
+  margin-top: 8px;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.badges {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.badges ion-badge {
+  border-radius: 20px;
+  padding: 7px 14px;
+}
+
+/* ====================== */
+/* Lista */
+/* ====================== */
+
+.ministerios-lista {
+
+  background: transparent;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+}
+
+ion-item-divider {
+
+  --background: transparent;
+
+  --color: #42a5f5;
+
+  font-size: 18px;
+  font-weight: bold;
+
+  margin-bottom: 10px;
+}
+
+ion-item {
+
+  --background: #151515;
+
+  --color: white;
+
+  margin-bottom: 10px;
+
+  border-radius: 14px;
+
+  border: 1px solid rgba(255,255,255,.06);
+
+  transition: .25s;
+}
+
+ion-item:hover {
+
+  --background: #1d2738;
+
+  transform: translateY(-2px);
+}
+
+.ministerio-item strong {
+  color: white;
+  font-size: 16px;
+}
+
+.funcoes-text {
+
+  color: #bdbdbd;
+
+  margin-top: 6px;
+
+  font-size: 13px;
+}
+
+/* Badge líder */
+
+.lider-badge {
+
+  margin-left: 10px;
+
+  background: #1565c0;
+
+  color: white;
+
+  padding: 4px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+
+  font-weight: 600;
+}
+
+/* ====================== */
+/* Botão */
+/* ====================== */
+
+ion-button {
+
+  margin-top: 25px;
+
+  height: 48px;
+
+  --border-radius: 14px;
+
+  font-weight: 600;
+
+  text-transform: none;
+}
+
+/* ====================== */
+/* Sem sessão */
+/* ====================== */
+
+p {
+  color: #9ca3af;
+  text-align: center;
+}
+
+/* ====================== */
+/* Tema claro */
+/* ====================== */
+
+@media (prefers-color-scheme: light) {
+
+  ion-content {
+    --background: #f3f5f9;
+  }
+
+  ion-toolbar {
+    --background: #ffffff;
+    --color: #111827;
+    border-bottom: 1px solid rgba(21, 101, 192, .15);
+  }
+
+  ion-title {
+    color: #111827;
+  }
+
+  .perfil-header {
+    background: #ffffff;
+    border: 1px solid rgba(21, 101, 192, .15);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .08);
+  }
+
+  .perfil-nome {
+    color: #111827;
+  }
+
+  .perfil-email {
+    color: #6b7280;
+  }
+
+  ion-item {
+    --background: #ffffff;
+    --color: #111827;
+    border: 1px solid rgba(17, 24, 39, .06);
+  }
+
+  ion-item:hover {
+    --background: #eef1f6;
+  }
+
+  .ministerio-item strong {
+    color: #111827;
+  }
+
+  .funcoes-text {
+    color: #4b5563;
+  }
+
+  p {
+    color: #6b7280;
+  }
+}
+
+/* ====================== */
+/* Animação */
+/* ====================== */
+
+.perfil-header,
+ion-item {
+
+  animation: fadeUp .35s ease;
+}
+
+@keyframes fadeUp {
+
+  from {
+
+    opacity: 0;
+
+    transform: translateY(12px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+  }
+
+}
+
+/* ====================== */
+/* Responsivo */
+/* ====================== */
+
+@media (max-width:480px){
+
+  .perfil-header{
+    padding:24px 18px;
+  }
+
+  .perfil-avatar{
+    width:85px;
+    height:85px;
+  }
+
+}

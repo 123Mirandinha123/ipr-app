@@ -1,0 +1,143 @@
+ion-content {
+  --background: #0b0b0b;
+}
+
+ion-toolbar {
+  --background: #111827;
+  --color: #ffffff;
+  border-bottom: 1px solid rgba(33, 150, 243, .25);
+}
+
+ion-title {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+ion-back-button,
+ion-menu-button {
+  --color: #42a5f5;
+}
+
+.data-destaque {
+  text-align: center;
+  color: #42a5f5;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 8px 0 20px;
+}
+
+.escala-card {
+  --background: #151515;
+  border-radius: 16px;
+  border: 1px solid rgba(33, 150, 243, .15);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .30);
+  margin-bottom: 16px;
+  animation: aparecer .35s ease;
+}
+
+.escala-card ion-card-header {
+  padding-bottom: 4px;
+}
+
+.escala-card ion-card-title {
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill-ministerio {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 30px;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+.turno-texto {
+  font-size: 0.75em;
+  font-weight: 400;
+  color: var(--ion-color-primary);
+}
+
+.funcao-linha {
+  color: #e5e5e5;
+  font-size: 15px;
+  margin: 6px 0;
+  font-weight: 500;
+}
+
+.funcao-vaga {
+  color: #8b8b8b;
+  font-size: 15px;
+  margin: 6px 0;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.vazio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  color: #8b8b8b;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* ========================= */
+/*        TEMA CLARO         */
+/* ========================= */
+
+@media (prefers-color-scheme: light) {
+
+  ion-content {
+    --background: #f3f5f9;
+  }
+
+  ion-toolbar {
+    --background: #ffffff;
+    --color: #111827;
+    border-bottom: 1px solid rgba(21, 101, 192, .15);
+  }
+
+  ion-title {
+    color: #111827;
+  }
+
+  .escala-card {
+    --background: #ffffff;
+    border: 1px solid rgba(21, 101, 192, .12);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, .08);
+  }
+
+  .escala-card ion-card-title {
+    color: #111827;
+  }
+
+  .funcao-linha {
+    color: #374151;
+  }
+
+  .funcao-vaga {
+    color: #9ca3af;
+  }
+
+  .vazio {
+    color: #6b7280;
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

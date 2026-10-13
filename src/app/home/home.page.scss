@@ -1,0 +1,206 @@
+ion-content {
+  --background:
+    linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)),
+    url('/assets/FundoIpr.png') center center / cover no-repeat;
+}
+
+
+/* Informações do usuário */
+.usuario-info {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0 25px;
+}
+
+.usuario-info ion-badge {
+  border-radius: 20px;
+  padding: 8px 15px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* Lista */
+ion-list {
+  background: transparent;
+}
+
+
+/* Cards dos ministérios */
+ion-item {
+  --background: #151515;
+  --color: #ffffff;
+
+  --padding-start: 18px;
+  --inner-padding-end: 18px;
+  --min-height: 62px;
+
+  margin-bottom: 12px;
+
+  border-radius: 14px;
+
+  border: 1px solid rgba(21, 101, 192, .25);
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.35);
+
+  transition: .25s ease;
+}
+
+
+/* Efeito azul */
+ion-item:hover {
+  border-color: #1565c0;
+  transform: translateY(-2px);
+}
+
+
+/* Texto */
+ion-label {
+  color: #ffffff !important;
+  font-size: 16px !important;
+  font-weight: 600;
+}
+
+
+/* Seta */
+ion-item::part(detail-icon) {
+  color: #2196f3;
+}
+
+
+/* Toolbar */
+ion-toolbar {
+  --background: #0b0b0b;
+  --color: #ffffff;
+
+  border-bottom: 1px solid rgba(33,150,243,.25);
+}
+
+
+ion-title {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+
+ion-menu-button {
+  --color: #2196f3;
+}
+
+
+/* Botão */
+ion-button {
+  height: 48px;
+  --border-radius: 12px;
+
+  font-weight: 700;
+  text-transform: none;
+}
+
+
+ion-button[fill="outline"] {
+  --border-color: #2196f3;
+  --color: #2196f3;
+  background: transparent;
+}
+
+
+/* ========================= */
+/*        TEMA CLARO         */
+/* ========================= */
+
+@media (prefers-color-scheme: light) {
+
+  ion-content {
+    --background:
+      linear-gradient(rgba(0, 0, 0, .35), rgba(0, 0, 0, .35)),
+      url('/assets/FundoIpr.png') center center / cover no-repeat;
+  }
+
+  ion-item {
+    --background: #ffffff;
+    --color: #111827;
+    border-color: rgba(21, 101, 192, .2);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .1);
+  }
+
+  ion-label {
+    color: #111827 !important;
+  }
+
+  ion-toolbar {
+    --background: #ffffff;
+    --color: #111827;
+  }
+
+  ion-title {
+    color: #111827;
+  }
+}
+
+
+/* ========================= */
+/*        DARK MODE          */
+/* ========================= */
+
+body.dark {
+
+  ion-content {
+    --background:
+      linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)),
+      url('/assets/FundoIpr.png') center center / cover no-repeat;
+  }
+
+
+  ion-item {
+    --background: #111827;
+    border-color: rgba(33,150,243,.25);
+  }
+
+
+  ion-label {
+    color: #ffffff !important;
+  }
+
+
+  ion-toolbar {
+    --background: #050505;
+  }
+
+}
+
+
+/* ========================= */
+/*        ANIMAÇÃO           */
+/* ========================= */
+
+ion-item {
+  animation: entrada .35s ease;
+}
+
+
+@keyframes entrada {
+
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+}
+
+
+/* Mobile */
+@media(max-width:480px){
+
+  ion-item {
+    --min-height: 58px;
+  }
+
+}
