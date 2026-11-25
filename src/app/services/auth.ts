@@ -1,4 +1,4 @@
-import { Injectable, NgZone, inject } from '@angular/core';
+import { Injectable, NgZone, inject, EnvironmentInjector, runInInjectionContext } from '@angular/core';
 import { Auth, signInWithEmailAndPassword, signOut, User } from '@angular/fire/auth';
 import { Firestore, doc, getDoc, getDocs, collection, query, where } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ export interface Usuario {
   uid: string;
   email: string;
   nome: string;
+  foto?: string;
   admin?: boolean;
     ministerios: {
       nome: string;
@@ -29,6 +30,11 @@ export class AuthService {
   private firestore = inject(Firestore);
   private router = inject(Router);
   private ngZone = inject(NgZone);
+  private injector = inject(EnvironmentInjector);
+
+  private runInContext<T>(fn: () => T): T {
+    return runInInjectionContext(this.injector, fn);
+  }
 
   private currentUserSubject = new BehaviorSubject<Usuario | null>(null);
   currentUser$: Observable<Usuario | null> = this.currentUserSubject.asObservable();
@@ -96,8 +102,12 @@ export class AuthService {
       this.router.navigate(['/login']);
       return;
     }
-    await signOut(this.auth);
     this.currentUserSubject.next(null);
+    try {
+      await this.runInContext(() => signOut(this.auth));
+    } catch (e) {
+      console.warn('Erro durante signOut:', e);
+    }
     this.router.navigate(['/login']);
   }
 
@@ -111,9 +121,11 @@ export class AuthService {
     try {
       const user = this.auth.currentUser;
       if (!user) return;
-      const ref = collection(this.firestore, 'usuarios');
-      const q = query(ref, where('uid', '==', user.uid));
-      const snapshot = await getDocs(q);
+      const snapshot = await this.runInContext(() => {
+        const ref = collection(this.firestore, 'usuarios');
+        const q = query(ref, where('uid', '==', user.uid));
+        return getDocs(q);
+      });
       if (!snapshot.empty) {
         const docSnap = snapshot.docs[0];
         const data = docSnap.data();
@@ -122,6 +134,7 @@ export class AuthService {
           uid: user.uid,
           email: data['email'] ?? user.email ?? '',
           nome: data['nome'] ?? '',
+          foto: data['foto'] ?? undefined,
           admin: data['admin'] ?? false,
           ministerios: (data['ministerios'] ?? []).map((m: any) => {
             const limpo: any = {};
@@ -143,8 +156,10 @@ export class AuthService {
   }
 
   private async loadUsuario(user: User): Promise<void> {
-    const usuariosRef = doc(this.firestore, `usuarios/${user.uid}`);
-    const snap = await getDoc(usuariosRef);
+    const snap = await this.runInContext(() => {
+      const usuariosRef = doc(this.firestore, `usuarios/${user.uid}`);
+      return getDoc(usuariosRef);
+    });
 
     if (snap.exists()) {
       const data = snap.data();
@@ -153,6 +168,7 @@ export class AuthService {
         uid: user.uid,
         email: data['email'] ?? user.email ?? '',
         nome: data['nome'] ?? '',
+        foto: data['foto'] ?? undefined,
         admin: data['admin'] ?? false,
         ministerios: (data['ministerios'] ?? []).map((m: any) => {
           const limpo: any = {};
