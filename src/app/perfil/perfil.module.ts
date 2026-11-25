@@ -4,13 +4,15 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { PerfilPage } from './perfil.page';
 import { PerfilPageRoutingModule } from './perfil-routing.module';
+import { BottomNavComponent } from '../components/bottom-nav.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PerfilPageRoutingModule
+    PerfilPageRoutingModule,
+    BottomNavComponent
   ],
   declarations: [PerfilPage]
 })

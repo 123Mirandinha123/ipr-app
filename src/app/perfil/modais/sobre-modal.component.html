@@ -1,0 +1,57 @@
+<div class="modal-card">
+  <div class="modal-header">
+    <div class="header-icon-box">
+      <ion-icon name="information-circle"></ion-icon>
+    </div>
+    <h2 class="modal-title">Sobre o App</h2>
+    <p class="modal-subtitle">IPR Conectada</p>
+  </div>
+
+  <div class="modal-body">
+    <!-- Logo e Versão -->
+    <div class="logo-box">
+      <img src="assets/LogoDourado.png" alt="Logo IPR" class="app-logo" />
+      <div class="versao-badge">Versão {{ versao }}</div>
+      <p class="slogan-texto"><em>Conectados para servir</em></p>
+    </div>
+
+    <!-- Propósito -->
+    <div class="info-card">
+      <div class="info-header">
+        <ion-icon name="heart-outline"></ion-icon>
+        <span>Propósito & Ministérios</span>
+      </div>
+      <p class="info-desc">
+        Desenvolvido para facilitar a organização das escalas ministeriais, o gerenciamento de indisponibilidades e o fortalecimento do trabalho em equipe na Igreja Presbiteriana Renovada.
+      </p>
+    </div>
+
+    <!-- Extensão Acadêmica -->
+    <div class="info-card">
+      <div class="info-header">
+        <ion-icon name="school-outline"></ion-icon>
+        <span>Projeto de Extensão</span>
+      </div>
+      <p class="info-desc">
+        Solução tecnológica desenvolvida como parte das atividades de extensão comunitária e acadêmica, unindo inovação digital ao serviço eclesiástico.
+      </p>
+    </div>
+
+    <!-- Privacidade e Dados -->
+    <div class="info-card">
+      <div class="info-header">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <span>Privacidade dos Dados</span>
+      </div>
+      <p class="info-desc">
+        Seus dados (nome, e-mail e indisponibilidades) são de uso exclusivo para a coordenação dos ministérios da igreja, com proteção e sem compartilhamento externo.
+      </p>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn-fechar" (click)="fechar()">
+      <span>Fechar</span>
+    </button>
+  </div>
+</div>

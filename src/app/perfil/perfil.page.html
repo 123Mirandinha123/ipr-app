@@ -12,38 +12,121 @@
 
 <ion-content class="ion-padding">
   <ng-container *ngIf="usuario; else semSessao">
-    <div class="perfil-header">
-      <ion-avatar class="perfil-avatar">
-        <span class="avatar-text">{{ usuario.nome.substring(0, 1) }}</span>
-      </ion-avatar>
-      <h3 class="perfil-nome">{{ usuario.nome }}</h3>
-      <p class="perfil-email">{{ usuario.email }}</p>
-      <div class="badges">
-        <ion-badge *ngIf="isAdmin" color="warning">Admin</ion-badge>
-        <ion-badge *ngIf="isLeader" color="success">Líder</ion-badge>
+
+    <!-- Card de Identificação do Perfil Hero -->
+    <div class="perfil-hero-container">
+      <div class="avatar-wrapper" (click)="fileInput.click()">
+        <ion-avatar class="perfil-avatar">
+          <img *ngIf="usuario.foto" [src]="usuario.foto" alt="Foto do Usuário" />
+          <span *ngIf="!usuario.foto" class="avatar-text">{{ usuario.nome.substring(0, 1) }}</span>
+        </ion-avatar>
+        <div class="camera-btn" title="Alterar foto">
+          <ion-icon name="camera"></ion-icon>
+        </div>
+      </div>
+      <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" style="display: none;" />
+
+      <div class="perfil-card-hero">
+        <div class="hero-bg-shapes"></div>
+        <div class="hero-content">
+          <h2 class="perfil-nome">{{ usuario.nome }}</h2>
+          <p class="perfil-email">{{ usuario.email }}</p>
+        </div>
       </div>
     </div>
 
-    <ion-list class="ministerios-lista">
-      <ion-item-divider>
-        <ion-label>Ministérios</ion-label>
-      </ion-item-divider>
-      <ion-item *ngFor="let m of usuario.ministerios" lines="none">
-        <ion-label class="ministerio-item">
-          <strong>{{ formatarMinisterio(m.nome) }}</strong>
-          <span *ngIf="m.lider" class="lider-badge">Líder</span>
-          <p *ngIf="m.funcoes?.length" class="funcoes-text">{{ m.funcoes.join(', ') }}</p>
-        </ion-label>
-      </ion-item>
-    </ion-list>
+    <!-- Seção 1: Minhas Informações -->
+    <div class="secao-card">
+      <div class="secao-titulo">
+        <ion-icon name="person-circle-outline" class="secao-icon"></ion-icon>
+        <span>Minhas Informações</span>
+      </div>
 
-    <ion-button expand="full" color="danger" (click)="logout()">
-      <ion-icon slot="start" name="log-out-outline"></ion-icon>
-      Sair
-    </ion-button>
+      <div class="item-row clickable" (click)="editarNome()">
+        <div class="item-left">
+          <ion-icon name="person-outline" class="item-icon"></ion-icon>
+          <div class="item-textos">
+            <span class="item-label">Nome Completo</span>
+            <span class="item-valor">{{ usuario.nome }}</span>
+          </div>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="item-chevron"></ion-icon>
+      </div>
+
+      <div class="item-divider"></div>
+
+      <div class="item-row clickable" (click)="editarEmail()">
+        <div class="item-left">
+          <ion-icon name="mail-outline" class="item-icon"></ion-icon>
+          <div class="item-textos">
+            <span class="item-label">E-mail</span>
+            <span class="item-valor">{{ usuario.email }}</span>
+          </div>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="item-chevron"></ion-icon>
+      </div>
+    </div>
+
+    <!-- Seção 2: Minhas Preferências -->
+    <div class="secao-card">
+      <div class="secao-titulo">
+        <ion-icon name="calendar-outline" class="secao-icon"></ion-icon>
+        <span>Minhas Preferências</span>
+      </div>
+
+      <div class="item-row">
+        <div class="item-left">
+          <ion-icon name="people-circle-outline" class="item-icon"></ion-icon>
+          <div class="item-textos">
+            <span class="item-label">Grupo Familiar</span>
+            <span class="item-valor">{{ grupoFamiliarNome }}</span>
+          </div>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="item-chevron"></ion-icon>
+      </div>
+
+      <div class="item-divider"></div>
+
+      <div class="item-row">
+        <div class="item-left">
+          <ion-icon name="notifications-outline" class="item-icon"></ion-icon>
+          <div class="item-textos">
+            <span class="item-label">Notificações</span>
+            <span class="item-valor">{{ notificacoesAtivas ? 'Ativadas' : 'Desativadas' }}</span>
+          </div>
+        </div>
+        <ion-toggle [ngModel]="notificacoesAtivas" (ionChange)="aoMudarNotificacoes($event)" mode="ios" color="primary"></ion-toggle>
+      </div>
+    </div>
+
+    <!-- Seção 3: Sistema & Segurança (Pílulas Independentes) -->
+    <div class="pill-item-card" (click)="abrirSeguranca()">
+      <div class="item-left">
+        <ion-icon name="shield-checkmark-outline" class="item-icon azul"></ion-icon>
+        <span class="item-btn-label">Segurança do App</span>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="item-chevron"></ion-icon>
+    </div>
+
+    <div class="pill-item-card" (click)="abrirSobre()">
+      <div class="item-left">
+        <ion-icon name="information-circle-outline" class="item-icon azul"></ion-icon>
+        <span class="item-btn-label">Sobre o App</span>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="item-chevron"></ion-icon>
+    </div>
+
+    <!-- Botão Sair -->
+    <button class="btn-sair-pill" (click)="logout()">
+      <ion-icon name="log-out-outline" class="btn-sair-icon"></ion-icon>
+      <span>Sair</span>
+    </button>
+
   </ng-container>
 
   <ng-template #semSessao>
-    <p>Nenhum usuário logado.</p>
+    <p class="sem-sessao">Nenhum usuário logado.</p>
   </ng-template>
 </ion-content>
+
+<app-bottom-nav activeTab="perfil"></app-bottom-nav>

@@ -1,0 +1,90 @@
+<div class="modal-card">
+  <div class="modal-header">
+    <div class="header-icon-box">
+      <ion-icon name="shield-checkmark"></ion-icon>
+    </div>
+    <h2 class="modal-title">Segurança do App</h2>
+    <p class="modal-subtitle">Proteção e Acesso à Conta</p>
+  </div>
+
+  <div class="modal-body">
+    <!-- Status da Conta -->
+    <div class="info-card destaque">
+      <div class="info-header">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <span>Status da Sua Conta</span>
+      </div>
+      <div class="status-row">
+        <span class="status-label">E-mail:</span>
+        <span class="status-valor">{{ usuario?.email }}</span>
+      </div>
+      <div class="status-row">
+        <span class="status-label">Nível de Acesso:</span>
+        <span class="status-badge" [class.badge-admin]="isAdmin" [class.badge-lider]="isLeader && !isAdmin">
+          {{ isAdmin ? 'Administrador' : (isLeader ? 'Líder de Ministério' : 'Membro') }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Redefinição de Senha -->
+    <div class="info-card">
+      <div class="info-header">
+        <ion-icon name="key-outline"></ion-icon>
+        <span>Alteração de Senha</span>
+      </div>
+      <p class="info-desc">
+        Deseja trocar ou atualizar sua senha? Nós enviaremos um link seguro direto para seu e-mail cadastrado.
+      </p>
+      <button class="btn-reset-senha" (click)="confirmarRedefinirSenha()">
+        <ion-icon name="mail-outline"></ion-icon>
+        <span>Enviar Link para Troca de Senha</span>
+      </button>
+    </div>
+
+    <!-- Login por Biometria (Digital / Face ID) -->
+    <div class="info-card" *ngIf="biometriaDisponivel">
+      <div class="info-header">
+        <ion-icon name="finger-print-outline"></ion-icon>
+        <span>Login por {{ tipoBiometria }}</span>
+      </div>
+      <p class="info-desc">
+        Entre no aplicativo rapidamente utilizando a sua digital ou reconhecimento facial.
+      </p>
+      <div class="biometria-toggle-row">
+        <span class="biometria-status-text">
+          {{ biometriaAtiva ? 'Habilitado neste aparelho' : 'Desabilitado' }}
+        </span>
+        <ion-toggle [ngModel]="biometriaAtiva" (ionChange)="toggleBiometria($event)" mode="ios" color="primary"></ion-toggle>
+      </div>
+    </div>
+
+    <!-- Criptografia e Infraestrutura -->
+    <div class="info-card">
+      <div class="info-header">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <span>Proteção de Dados</span>
+      </div>
+      <p class="info-desc">
+        Sua sessão e senhas são autenticadas com criptografia de ponta a ponta pelo Google Cloud / Firebase Authentication.
+      </p>
+    </div>
+
+    <!-- Boas práticas -->
+    <div class="info-card">
+      <div class="info-header">
+        <ion-icon name="checkmark-done-outline"></ion-icon>
+        <span>Boas Práticas</span>
+      </div>
+      <p class="info-desc">
+        • Nunca compartilhe suas credenciais com outras pessoas.<br>
+        • Caso acesse por um celular de terceiros, lembre-se de clicar em <strong>Sair</strong> no fim do uso.
+      </p>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn-fechar" (click)="fechar()">
+      <span>Fechar</span>
+    </button>
+  </div>
+</div>

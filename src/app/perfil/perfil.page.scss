@@ -1,224 +1,323 @@
 ion-content {
-  --background: #0b0b0b;
+  --background:
+    radial-gradient(circle at 50% 8%, rgba(29, 78, 216, 0.4) 0%, rgba(10, 15, 29, 0.98) 75%),
+    url('/assets/FundoIpr.png') center center / cover no-repeat;
+  --padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+  --color: #ffffff;
 }
 
-/* Toolbar */
-
+/* ===================== */
+/* Toolbar               */
+/* ===================== */
 ion-toolbar {
   --background: #111827;
   --color: #ffffff;
-  border-bottom: 1px solid rgba(33,150,243,.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 ion-title {
+  color: #ffffff;
   font-weight: 700;
-  color: white;
+  font-size: 1.15rem;
 }
 
 ion-back-button,
 ion-menu-button {
-  --color: #42a5f5;
+  --color: #3b82f6;
 }
 
-/* ====================== */
-/* Perfil */
-/* ====================== */
-
-.perfil-header {
-
-  background: #151515;
-
-  border-radius: 18px;
-
-  padding: 30px 20px;
-
-  margin-bottom: 25px;
-
+/* ===================== */
+/* Hero Container        */
+/* ===================== */
+.perfil-hero-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 22px;
+}
 
-  border: 1px solid rgba(33,150,243,.18);
-
-  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+.avatar-wrapper {
+  position: relative;
+  cursor: pointer;
+  z-index: 3;
+  margin-bottom: -46px; /* Sobrepõe parcialmente a borda superior do card */
 }
 
 .perfil-avatar {
-
-  width: 95px;
-  height: 95px;
-
-  margin-bottom: 18px;
-
-  background: linear-gradient(135deg,#1565c0,#42a5f5);
-
+  width: 98px;
+  height: 98px;
+  border-radius: 50%;
+  border: 3px solid #38bdf8;
+  box-shadow: 0 0 28px rgba(56, 189, 248, 0.8), 0 0 50px rgba(37, 99, 235, 0.4);
+  background: #0f172a;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+}
 
-  box-shadow: 0 10px 25px rgba(33,150,243,.30);
+.perfil-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .avatar-text {
-  color: white;
   font-size: 38px;
-  font-weight: bold;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.camera-btn {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #2563eb;
+  border: 2px solid #0b0f19;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  z-index: 4;
+}
+
+/* ===================== */
+/* Card Hero com Ondas   */
+/* ===================== */
+.perfil-card-hero {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 12%, rgba(29, 78, 216, 0.45) 0%, rgba(11, 15, 28, 0.96) 80%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(59, 130, 246, 0.45);
+  border-radius: 28px;
+  padding: 58px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(37, 99, 235, 0.35), inset 0 0 20px rgba(59, 130, 246, 0.15);
+}
+
+.hero-bg-shapes {
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 60px rgba(37, 99, 235, 0.12);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
 }
 
 .perfil-nome {
   margin: 0;
-  color: white;
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.3px;
 }
 
 .perfil-email {
-  margin-top: 8px;
-  color: #9ca3af;
-  font-size: 14px;
+  margin: 4px 0 0;
+  font-size: 0.95rem;
+  color: #94a3b8;
 }
 
-.badges {
+/* ===================== */
+/* Seções Agrupadas      */
+/* ===================== */
+.secao-card {
+  background: rgba(17, 24, 39, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+}
+
+.secao-titulo {
   display: flex;
+  align-items: center;
   gap: 8px;
-  margin-top: 16px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f3f4f6;
+  margin-bottom: 14px;
 }
 
-.badges ion-badge {
-  border-radius: 20px;
-  padding: 7px 14px;
+.secao-icon {
+  font-size: 22px;
+  color: #38bdf8;
 }
 
-/* ====================== */
-/* Lista */
-/* ====================== */
+.item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  transition: opacity 0.2s ease, background 0.2s ease;
 
-.ministerios-lista {
+  &.clickable {
+    cursor: pointer;
+    border-radius: 12px;
+    padding: 8px 10px;
+    margin: 0 -10px;
 
-  background: transparent;
-
-  border-radius: 18px;
-
-  overflow: hidden;
-}
-
-ion-item-divider {
-
-  --background: transparent;
-
-  --color: #42a5f5;
-
-  font-size: 18px;
-  font-weight: bold;
-
-  margin-bottom: 10px;
-}
-
-ion-item {
-
-  --background: #151515;
-
-  --color: white;
-
-  margin-bottom: 10px;
-
-  border-radius: 14px;
-
-  border: 1px solid rgba(255,255,255,.06);
-
-  transition: .25s;
-}
-
-ion-item:hover {
-
-  --background: #1d2738;
-
-  transform: translateY(-2px);
-}
-
-.ministerio-item strong {
-  color: white;
-  font-size: 16px;
-}
-
-.funcoes-text {
-
-  color: #bdbdbd;
-
-  margin-top: 6px;
-
-  font-size: 13px;
-}
-
-/* Badge líder */
-
-.lider-badge {
-
-  margin-left: 10px;
-
-  background: #1565c0;
-
-  color: white;
-
-  padding: 4px 10px;
-
-  border-radius: 20px;
-
-  font-size: 11px;
-
-  font-weight: 600;
-}
-
-/* ====================== */
-/* Botão */
-/* ====================== */
-
-ion-button {
-
-  margin-top: 25px;
-
-  height: 48px;
-
-  --border-radius: 14px;
-
-  font-weight: 600;
-
-  text-transform: none;
-}
-
-/* ====================== */
-/* Sem sessão */
-/* ====================== */
-
-p {
-  color: #9ca3af;
-  text-align: center;
-}
-
-/* ====================== */
-/* Tema claro */
-/* ====================== */
-
-@media (prefers-color-scheme: light) {
-
-  ion-content {
-    --background: #f3f5f9;
+    &:active {
+      background: rgba(255, 255, 255, 0.08);
+      opacity: 0.85;
+    }
   }
+}
 
+.item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.item-icon {
+  font-size: 22px;
+  color: #38bdf8;
+}
+
+.item-icon.azul {
+  color: #38bdf8;
+}
+
+.item-textos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.item-label {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.item-valor {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #f9fafb;
+}
+
+.item-chevron {
+  font-size: 18px;
+  color: #6b7280;
+}
+
+.item-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 6px 0;
+}
+
+/* ===================== */
+/* Pílulas Independentes */
+/* ===================== */
+.pill-item-card {
+  background: rgba(17, 24, 39, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+  transition: transform 0.16s ease;
+}
+
+.pill-item-card:active {
+  transform: scale(0.98);
+}
+
+.item-btn-label {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #f3f4f6;
+}
+
+/* ===================== */
+/* Botão Sair Pill       */
+/* ===================== */
+.btn-sair-pill {
+  width: 100%;
+  height: 52px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, #b91c1c, #dc2626);
+  border: none;
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(220, 38, 38, 0.4);
+  transition: transform 0.18s ease;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.btn-sair-pill:active {
+  transform: scale(0.98);
+  background: #991b1b;
+}
+
+.btn-sair-icon {
+  font-size: 22px;
+}
+
+.sem-sessao {
+  text-align: center;
+  color: #9ca3af;
+  margin-top: 40px;
+}
+
+/* ===================== */
+/* Adaptação Modo Claro  */
+/* ===================== */
+@media (prefers-color-scheme: light) {
   ion-toolbar {
     --background: #ffffff;
     --color: #111827;
-    border-bottom: 1px solid rgba(21, 101, 192, .15);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   }
 
   ion-title {
     color: #111827;
   }
 
-  .perfil-header {
+  .perfil-card-hero {
     background: #ffffff;
-    border: 1px solid rgba(21, 101, 192, .15);
-    box-shadow: 0 8px 24px rgba(15, 23, 42, .08);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   }
 
   .perfil-nome {
@@ -229,72 +328,34 @@ p {
     color: #6b7280;
   }
 
-  ion-item {
-    --background: #ffffff;
-    --color: #111827;
-    border: 1px solid rgba(17, 24, 39, .06);
+  .secao-card,
+  .pill-item-card {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
   }
 
-  ion-item:hover {
-    --background: #eef1f6;
-  }
-
-  .ministerio-item strong {
+  .secao-titulo {
     color: #111827;
   }
 
-  .funcoes-text {
-    color: #4b5563;
-  }
-
-  p {
+  .item-label {
     color: #6b7280;
   }
-}
 
-/* ====================== */
-/* Animação */
-/* ====================== */
-
-.perfil-header,
-ion-item {
-
-  animation: fadeUp .35s ease;
-}
-
-@keyframes fadeUp {
-
-  from {
-
-    opacity: 0;
-
-    transform: translateY(12px);
-
+  .item-valor {
+    color: #111827;
   }
 
-  to {
-
-    opacity: 1;
-
-    transform: translateY(0);
-
+  .item-btn-label {
+    color: #111827;
   }
 
-}
-
-/* ====================== */
-/* Responsivo */
-/* ====================== */
-
-@media (max-width:480px){
-
-  .perfil-header{
-    padding:24px 18px;
+  .item-divider {
+    background: rgba(0, 0, 0, 0.06);
   }
 
-  .perfil-avatar{
-    width:85px;
-    height:85px;
+  .camera-btn {
+    border-color: #ffffff;
   }
-
 }
