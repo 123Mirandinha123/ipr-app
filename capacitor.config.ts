@@ -2,9 +2,13 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.ipr.app',
-  appName: 'app-ipr',
+  appName: 'Ipr App',
   webDir: 'www',
   plugins: {
+    LocalNotifications: {
+      smallIcon: 'ic_stat_notification',
+      iconColor: '#0284c7'
+    },
     SplashScreen: {
       launchShowDuration: 4000,
       launchAutoHide: true,
