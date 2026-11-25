@@ -72,6 +72,8 @@ testem.log
 
 # Firebase gerado a partir do .env
 /src/environments/firebase-config.ts
+.firebaserc
+!.firebaserc.example
 
 # System files
 .DS_Store
