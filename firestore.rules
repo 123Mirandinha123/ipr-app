@@ -38,10 +38,15 @@ service cloud.firestore {
 
     match /escalas/{id} {
       allow read: if signedIn();
-      allow write: if eAdmin();
+      allow write: if eAdmin() || eLider();
     }
 
     match /familias/{id} {
+      allow read: if signedIn();
+      allow write: if eAdmin() || eLider();
+    }
+
+    match /mensagens/{id} {
       allow read: if signedIn();
       allow write: if eAdmin() || eLider();
     }
