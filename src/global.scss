@@ -37,6 +37,16 @@
 @import "@ionic/angular/css/palettes/dark.system.css";
 
 /* ===================== */
+/* Cores base do App (evita flashes/partes brancas) */
+/* ===================== */
+
+html, body, ion-app, ion-router-outlet {
+  background-color: #0a0f1d !important;
+  background: #0a0f1d !important;
+  color: #ffffff;
+}
+
+/* ===================== */
 /* Toolbar azul (todos os temas) */
 /* ===================== */
 
@@ -56,4 +66,34 @@ ion-toolbar ion-menu-button {
 
 ion-toolbar ion-buttons ion-button {
   --color: #ffffff !important;
+}
+
+/* ======================================= */
+/* Modal de Resultado de Escalas           */
+/* ======================================= */
+
+.modal-resultado-escalas {
+  --background: transparent;
+  --backdrop-opacity: 0.75;
+  --border-radius: 24px;
+}
+
+/* ======================================= */
+/* Modal Compacto de Indisponibilidades    */
+/* ======================================= */
+
+.modal-indisponibilidade-compacto {
+  --backdrop-opacity: 0.75;
+  --border-radius: 24px;
+  --width: 92%;
+  --max-width: 440px;
+  --height: 88vh;
+  --max-height: 740px;
+  --box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(37, 99, 235, 0.3);
+
+  &::part(content) {
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    border-radius: 24px;
+    overflow: hidden;
+  }
 }

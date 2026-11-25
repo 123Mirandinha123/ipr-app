@@ -4,13 +4,15 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { FamiliasPage } from './familias.page';
 import { FamiliasPageRoutingModule } from './familias-routing.module';
+import { BottomNavComponent } from '../components/bottom-nav.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FamiliasPageRoutingModule
+    FamiliasPageRoutingModule,
+    BottomNavComponent
   ],
   declarations: [FamiliasPage]
 })

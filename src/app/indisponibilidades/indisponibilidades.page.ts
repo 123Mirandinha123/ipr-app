@@ -1,7 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { AuthService } from '../services/auth';
 import { FirestoreService } from '../services/firestore';
+import { NotificacoesService } from '../services/notificacoes';
 import { IndisponibilidadeModalComponent } from '../escalas/indisponibilidade-modal.component';
 
 interface MinisterioInfo {
@@ -21,6 +22,8 @@ export class IndisponibilidadesPage implements OnInit {
   private authService = inject(AuthService);
   private firestoreService = inject(FirestoreService);
   private modalCtrl = inject(ModalController);
+  private loadingCtrl = inject(LoadingController);
+  private notificacoesService = inject(NotificacoesService);
 
   ministerios: MinisterioInfo[] = [];
 
@@ -55,35 +58,83 @@ export class IndisponibilidadesPage implements OnInit {
 
     const modal = await this.modalCtrl.create({
       component: IndisponibilidadeModalComponent,
-      componentProps: { existing: minIndisps }
+      componentProps: { existing: minIndisps },
+      cssClass: 'modal-indisponibilidade-compacto'
     });
 
     modal.onDidDismiss().then(async (result) => {
       if (!result.data) return;
-      const items: { data: string; turno?: string }[] = result.data.items;
-      const motivo: string = result.data.motivo;
 
-      for (const ind of minIndisps) {
-        const stillSelected = items.some(item =>
-          item.data === ind.data && (item.turno || '') === (ind.turno || '')
-        );
-        if (!stillSelected) {
-          await this.firestoreService.removeUserIndisponibilidade(
-            user.uid, ministerio, ind.data, ind.turno
+      const loading = await this.loadingCtrl.create({
+        message: 'Salvando suas indisponibilidades...',
+        spinner: 'crescent'
+      });
+      await loading.present();
+
+      try {
+        const items: { data: string; turno?: string; motivo?: string }[] = result.data.items || [];
+
+        for (const ind of minIndisps) {
+          const stillSelected = items.some(item =>
+            item.data === ind.data && (item.turno || '') === (ind.turno || '')
+          );
+          if (!stillSelected) {
+            await this.firestoreService.removeUserIndisponibilidade(
+              user.uid, ministerio, ind.data, ind.turno
+            );
+          }
+        }
+
+        for (const item of items) {
+          await this.firestoreService.addUserIndisponibilidade(
+            user.uid, ministerio, item.data, item.turno, item.motivo || ''
           );
         }
-      }
 
-      for (const item of items) {
-        await this.firestoreService.addUserIndisponibilidade(
-          user.uid, ministerio, item.data, item.turno, motivo
-        );
-      }
+        if (items.length > 0) {
+          const nomeMinFormatado = this.mapaNomes[ministerio] || ministerio;
+          this.notificacoesService.notificarIndisponibilidadeRecebida(user.nome || '', nomeMinFormatado);
+        }
 
-      await this.authService.refreshCurrentUser();
+        await this.authService.refreshCurrentUser();
+      } finally {
+        await loading.dismiss();
+      }
     });
 
     return await modal.present();
+  }
+
+  iconeMinisterio(chave: string): string {
+    const icones: Record<string, string> = {
+      louvor: 'mic-outline',
+      sonoplastia: 'options-outline',
+      renoshow: 'videocam-outline',
+      midia: 'phone-portrait-outline',
+      maternal: 'heart-outline',
+      '4a6': 'color-palette-outline',
+      '7a10': 'book-outline',
+      juniores: 'people-outline',
+      adolescentes: 'flash-outline',
+      diaconos: 'hand-left-outline'
+    };
+    return icones[chave] || 'people-outline';
+  }
+
+  corIconeMinisterio(chave: string): string {
+    const cores: Record<string, string> = {
+      louvor: '#8b5cf6',
+      sonoplastia: '#3b82f6',
+      renoshow: '#a855f7',
+      midia: '#06b6d4',
+      maternal: '#f59e0b',
+      '4a6': '#fb923c',
+      '7a10': '#84cc16',
+      juniores: '#10b981',
+      adolescentes: '#6366f1',
+      diaconos: '#eab308'
+    };
+    return cores[chave] || '#38bdf8';
   }
 
   private normalizar(texto: string): string {

@@ -4,13 +4,15 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { IndisponibilidadesPage } from './indisponibilidades.page';
 import { IndisponibilidadesPageRoutingModule } from './indisponibilidades-routing.module';
+import { BottomNavComponent } from '../components/bottom-nav.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    IndisponibilidadesPageRoutingModule
+    IndisponibilidadesPageRoutingModule,
+    BottomNavComponent
   ],
   declarations: [IndisponibilidadesPage]
 })

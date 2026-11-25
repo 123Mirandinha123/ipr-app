@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { filter } from 'rxjs/operators';
 import { Capacitor } from '@capacitor/core';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { AuthService, Usuario } from './services/auth';
@@ -31,6 +32,18 @@ export class AppComponent implements OnInit {
         this.notificacoesService.verificarEscalasDeHoje();
       }
     });
+
+    // Monitorar rotas para bloquear menu na tela de login
+    this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        const isLogin = event.urlAfterRedirects.includes('/login') || event.url.includes('/login');
+        this.menuCtrl.enable(!isLogin);
+        if (isLogin) {
+          this.menuCtrl.close();
+        }
+      });
+
     this.mostrarSplashAposSistema();
   }
 

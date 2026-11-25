@@ -12,29 +12,40 @@
 
 <ion-content class="ion-padding">
 
-  <p class="info-text">
-    Compartilhe as escalas de {{ tituloMes }}. Cada ministério é enviado em uma mensagem separada.
-  </p>
+  <!-- Spinner de Carregamento Inicial -->
+  <div *ngIf="carregando" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando escalas para compartilhar...</p>
+  </div>
 
-  <ion-button *ngIf="isAdmin && grupos.length > 0" expand="full" color="success" (click)="compartilharTudo()">
-    <ion-icon slot="start" name="logo-whatsapp"></ion-icon>
-    Compartilhar tudo
-  </ion-button>
+  <!-- Botão Compartilhar Tudo -->
+  <div class="compartilhar-tudo-box" *ngIf="!carregando && isAdmin && grupos.length > 0">
+    <button class="btn-compartilhar-tudo" (click)="compartilharTudo()">
+      <ion-icon name="logo-whatsapp"></ion-icon>
+      <span>Compartilhar tudo</span>
+    </button>
+  </div>
 
-  <ion-list *ngIf="grupos.length > 0">
-    <ion-item *ngFor="let grupo of grupos">
-      <ion-label>
-        <h2>{{ grupo.nome }}</h2>
-        <p class="quantidade">{{ grupo.escalas.length }} escala(s) no mês</p>
-      </ion-label>
-      <ion-button slot="end" fill="clear" color="success" (click)="compartilharMinisterio(grupo)">
-        <ion-icon slot="icon-only" name="logo-whatsapp"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-list>
+  <!-- Lista de Grupos/Ministérios -->
+  <div class="grupos-container" *ngIf="!carregando && grupos.length > 0">
+    <div class="grupo-card" *ngFor="let grupo of grupos">
+      <div class="grupo-info">
+        <h2 class="grupo-nome">{{ grupo.nome }}</h2>
+        <span class="grupo-qtd">{{ grupo.escalas.length }} escala(s) no mês</span>
+      </div>
 
-  <div class="vazio" *ngIf="!carregando && grupos.length === 0">
-    <p>Nenhuma escala encontrada para {{ tituloMes }}.</p>
+      <button class="btn-whatsapp-circular" (click)="compartilharMinisterio(grupo)" aria-label="Compartilhar no WhatsApp">
+        <ion-icon name="logo-whatsapp"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Estado Vazio -->
+  <div class="vazio-container" *ngIf="!carregando && grupos.length === 0">
+    <ion-icon name="share-social-outline" class="vazio-icon"></ion-icon>
+    <p class="vazio-texto">Nenhuma escala encontrada para este mês.</p>
   </div>
 
 </ion-content>
+
+<app-bottom-nav activeTab="todos"></app-bottom-nav>

@@ -39,6 +39,65 @@ export class MembrosPage implements OnInit {
   view: 'list' | 'members' = 'list';
   ministerios: MinisterioInfo[] = [];
 
+  termoBusca = '';
+  mostrarSenha = false;
+
+  get usuariosFiltrados(): any[] {
+    if (!this.termoBusca || !this.termoBusca.trim()) {
+      return this.usuarios;
+    }
+    const busca = this.termoBusca.trim().toLowerCase();
+    return this.usuarios.filter(u =>
+      (u.nome || '').toLowerCase().includes(busca) ||
+      (u.email || '').toLowerCase().includes(busca)
+    );
+  }
+
+  toggleMostrarSenha() {
+    this.mostrarSenha = !this.mostrarSenha;
+  }
+
+  corIconeMinisterio(chave: string): string {
+    const cores: Record<string, string> = {
+      louvor: '#c084fc',
+      midia: '#22d3ee',
+      renoshow: '#e879f9',
+      maternal: '#2dd4bf',
+      '4a6': '#38bdf8',
+      '7a10': '#a855f7',
+      juniores: '#38bdf8',
+      adolescentes: '#c084fc',
+      sonoplastia: '#38bdf8',
+      diaconos: '#fbbf24'
+    };
+    return cores[chave] || '#38bdf8';
+  }
+
+  iconeMinisterio(chave: string): string {
+    const icones: Record<string, string> = {
+      louvor: 'mic-outline',
+      sonoplastia: 'options-outline',
+      renoshow: 'videocam-outline',
+      midia: 'phone-portrait-outline',
+      maternal: 'heart-outline',
+      '4a6': 'color-palette-outline',
+      '7a10': 'book-outline',
+      juniores: 'people-outline',
+      adolescentes: 'flash-outline',
+      diaconos: 'hand-left-outline'
+    };
+    return icones[chave] || 'people-outline';
+  }
+
+  getListaBadges(usuario: any): string {
+    const ministerios = (usuario['ministerios'] || []);
+    if (!ministerios.length) return '';
+    return ministerios.map((m: any) => {
+      const nomeFormatado = this.mapaNomes[this.normalizarMinisterio(m.nome)] || m.nome;
+      return m.lider ? `${nomeFormatado} (Líder)` : nomeFormatado;
+    }).join(' · ');
+  }
+
   private mapaNomes: Record<string, string> = {
     louvor: 'Louvor', midia: 'Mídia', renoshow: 'RenoShow',
     maternal: 'Maternal', '4a6': '4 a 6', '7a10': '7 a 10',

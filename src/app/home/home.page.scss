@@ -1,16 +1,18 @@
 ion-content {
   --background:
-    linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)),
+    radial-gradient(circle at 50% 8%, rgba(29, 78, 216, 0.4) 0%, rgba(10, 15, 29, 0.98) 75%),
     url('/assets/FundoIpr.png') center center / cover no-repeat;
+  --padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px));
+  --color: #ffffff;
 }
-
 
 /* Informações do usuário */
 .usuario-info {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin: 20px 0 25px;
+  margin: 15px 0 20px;
 }
 
 .usuario-info ion-badge {
@@ -20,187 +22,219 @@ ion-content {
   font-weight: 600;
 }
 
+/* ======================================= */
+/* Container dos Departamentos (Cards)    */
+/* ======================================= */
 
-/* Lista */
-ion-list {
-  background: transparent;
+.departamentos-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
-
-/* Cards dos ministérios */
-ion-item {
-  --background: #151515;
-  --color: #ffffff;
-
-  --padding-start: 18px;
-  --inner-padding-end: 18px;
-  --min-height: 62px;
-
-  margin-bottom: 12px;
-
-  border-radius: 14px;
-
-  border: 1px solid rgba(21, 101, 192, .25);
-
-  box-shadow:
-    0 4px 12px rgba(0,0,0,.35);
-
-  transition: .25s ease;
+.depto-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-
-/* Efeito azul */
-ion-item:hover {
-  border-color: #1565c0;
-  transform: translateY(-2px);
+.depto-card:active {
+  transform: scale(0.98);
 }
 
-
-/* Texto */
-ion-label {
-  color: #ffffff !important;
-  font-size: 16px !important;
-  font-weight: 600;
+.depto-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-
-/* Seta */
-ion-item::part(detail-icon) {
-  color: #2196f3;
-}
-
-
-/* Toolbar */
-ion-toolbar {
-  --background: #0b0b0b;
-  --color: #ffffff;
-
-  border-bottom: 1px solid rgba(33,150,243,.25);
-}
-
-
-ion-title {
-  color: #ffffff;
-  font-weight: 700;
-}
-
-
-ion-menu-button {
-  --color: #2196f3;
-}
-
-
-/* Botão */
-ion-button {
+.depto-badge {
+  width: 48px;
   height: 48px;
-  --border-radius: 12px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 24px;
+  flex-shrink: 0;
+}
 
+.depto-textos {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.depto-titulo {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.3px;
+}
+
+.depto-status {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #d97706; /* Cor dourada/alaranjada para pendente como na imagem */
+}
+
+.depto-status.gerada {
+  color: #4b5563; /* Cor neutra/cinza como "Escala Gerada" na imagem */
+}
+
+.depto-membros {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #374151;
+  white-space: nowrap;
+}
+
+/* ======================================= */
+/* Botões de Ação na Base                 */
+/* ======================================= */
+
+.acoes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.btn-criar-todas {
+  background: #22c55e;
+  border: none;
+  border-radius: 16px;
+  color: #ffffff;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 1rem;
   font-weight: 700;
-  text-transform: none;
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-
-ion-button[fill="outline"] {
-  --border-color: #2196f3;
-  --color: #2196f3;
-  background: transparent;
+.btn-criar-todas:active {
+  background: #16a34a;
+  transform: scale(0.98);
 }
 
+.btn-icon {
+  font-size: 20px;
+}
 
-/* ========================= */
-/*        TEMA CLARO         */
-/* ========================= */
+.btn-excluir-todas {
+  background: #ffffff;
+  border: 1.5px solid #ef4444;
+  border-radius: 16px;
+  color: #dc2626;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 
-@media (prefers-color-scheme: light) {
+.btn-excluir-todas:active {
+  background: #fef2f2;
+  transform: scale(0.98);
+}
 
-  ion-content {
-    --background:
-      linear-gradient(rgba(0, 0, 0, .35), rgba(0, 0, 0, .35)),
-      url('/assets/FundoIpr.png') center center / cover no-repeat;
+.btn-icon-red {
+  font-size: 20px;
+  color: #dc2626;
+}
+
+/* ======================================= */
+/* Modo Escuro / Dark Theme               */
+/* ======================================= */
+@media (prefers-color-scheme: dark) {
+  .depto-card {
+    background: rgba(22, 24, 34, 0.78);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
   }
 
-  ion-item {
-    --background: #ffffff;
-    --color: #111827;
-    border-color: rgba(21, 101, 192, .2);
-    box-shadow: 0 4px 12px rgba(15, 23, 42, .1);
+  .depto-titulo {
+    color: #f3f4f6;
   }
 
-  ion-label {
-    color: #111827 !important;
+  .depto-status.gerada {
+    color: #9ca3af;
   }
 
-  ion-toolbar {
-    --background: #ffffff;
-    --color: #111827;
+  .depto-membros {
+    color: #9ca3af;
   }
 
-  ion-title {
-    color: #111827;
+  .btn-excluir-todas {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1.5px solid #ef4444;
+    color: #fca5a5;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.2);
+  }
+
+  .btn-excluir-todas:active {
+    background: rgba(239, 68, 68, 0.22);
+  }
+
+  .btn-icon-red {
+    color: #fca5a5;
   }
 }
 
-
-/* ========================= */
-/*        DARK MODE          */
-/* ========================= */
-
-body.dark {
-
-  ion-content {
-    --background:
-      linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)),
-      url('/assets/FundoIpr.png') center center / cover no-repeat;
+:host-context(body.dark) {
+  .depto-card {
+    background: rgba(22, 24, 34, 0.78);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
   }
 
-
-  ion-item {
-    --background: #111827;
-    border-color: rgba(33,150,243,.25);
+  .depto-titulo {
+    color: #f3f4f6;
   }
 
-
-  ion-label {
-    color: #ffffff !important;
+  .depto-status.gerada {
+    color: #9ca3af;
   }
 
-
-  ion-toolbar {
-    --background: #050505;
+  .depto-membros {
+    color: #9ca3af;
   }
 
-}
-
-
-/* ========================= */
-/*        ANIMAÇÃO           */
-/* ========================= */
-
-ion-item {
-  animation: entrada .35s ease;
-}
-
-
-@keyframes entrada {
-
-  from {
-    opacity: 0;
-    transform: translateX(-15px);
+  .btn-excluir-todas {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1.5px solid #ef4444;
+    color: #fca5a5;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.2);
   }
 
-  to {
-    opacity: 1;
-    transform: translateX(0);
+  .btn-excluir-todas:active {
+    background: rgba(239, 68, 68, 0.22);
   }
 
-}
-
-
-/* Mobile */
-@media(max-width:480px){
-
-  ion-item {
-    --min-height: 58px;
+  .btn-icon-red {
+    color: #fca5a5;
   }
-
 }

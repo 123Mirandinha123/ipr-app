@@ -1,11 +1,12 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, EnvironmentInjector, runInInjectionContext } from '@angular/core';
 import {
   Firestore, collection, collectionData, addDoc,
   doc, deleteDoc, updateDoc, setDoc, query, getDocs, getDoc
 } from '@angular/fire/firestore';
-import { Observable, of, map } from 'rxjs';
+import { Observable, of, map, catchError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { usuariosSimulados, familiasSimuladas } from './dados-simulacao';
+import { Usuario, Escala, Familia, IndisponibilidadeUsuario } from '../models';
 
 const STORAGE_ESCALAS = 'sim_local_escalas';
 const STORAGE_USUARIOS = 'sim_local_usuarios';
@@ -17,6 +18,11 @@ const STORAGE_FAMILIAS = 'sim_local_familias';
 export class FirestoreService {
 
   private firestore = inject(Firestore);
+  private injector = inject(EnvironmentInjector);
+
+  private runInContext<T>(fn: () => T): T {
+    return runInInjectionContext(this.injector, fn);
+  }
 
   private get localMode(): boolean {
     return environment.useLocalData;
@@ -51,38 +57,65 @@ export class FirestoreService {
     return familiasSimuladas.map((f, i) => ({ id: `local-familia-${i}`, ...f }));
   }
 
-  getEscalas(): Observable<any[]> {
+  getEscalas(): Observable<Escala[]> {
     if (this.localMode) {
-      return of(this.lerLocais(STORAGE_ESCALAS));
+      return of(this.lerLocais<Escala>(STORAGE_ESCALAS));
     }
-    const ref = collection(this.firestore, 'escalas');
-    return collectionData(ref, { idField: 'id' });
+    return this.runInContext(() => {
+      const ref = collection(this.firestore, 'escalas');
+      return (collectionData(ref, { idField: 'id' }) as Observable<Escala[]>).pipe(
+        catchError(err => {
+          console.warn('Erro ou permissão revogada ao obter escalas:', err?.message || err);
+          return of([]);
+        })
+      );
+    });
   }
 
-  getUsuarios(): Observable<any[]> {
-    const obs = this.localMode
-      ? of(this.usuariosLocais())
-      : collectionData(collection(this.firestore, 'usuarios'), { idField: 'id' });
-    return obs.pipe(map(lista => (lista || []).map(u => ({ ...u, uid: u['uid'] || u['id'] }))));
+  getUsuarios(): Observable<Usuario[]> {
+    if (this.localMode) {
+      return of(this.usuariosLocais()).pipe(
+        map(lista => (lista || []).map(u => ({ ...u, uid: u['uid'] || u['id'] } as Usuario)))
+      );
+    }
+    return this.runInContext(() => {
+      const obs = collectionData(collection(this.firestore, 'usuarios'), { idField: 'id' });
+      return obs.pipe(
+        map(lista => (lista || []).map(u => ({ ...u, uid: u['uid'] || u['id'] } as Usuario))),
+        catchError(err => {
+          console.warn('Erro ou permissão revogada ao obter usuários:', err?.message || err);
+          return of([]);
+        })
+      );
+    });
   }
 
-  getFamilias(): Observable<any[]> {
+  getFamilias(): Observable<Familia[]> {
     if (this.localMode) {
       return of(this.familiasLocais());
     }
-    const ref = collection(this.firestore, 'familias');
-    return collectionData(ref, { idField: 'id' });
+    return this.runInContext(() => {
+      const ref = collection(this.firestore, 'familias');
+      return (collectionData(ref, { idField: 'id' }) as Observable<Familia[]>).pipe(
+        catchError(err => {
+          console.warn('Erro ou permissão revogada ao obter famílias:', err?.message || err);
+          return of([]);
+        })
+      );
+    });
   }
 
-  async addEscala(escala: any) {
+  async addEscala(escala: Escala) {
     if (this.localMode) {
       const lista = this.lerLocais<any>(STORAGE_ESCALAS);
       lista.push({ id: `local-${Date.now()}-${lista.length}`, ...escala });
       this.salvarLocais(STORAGE_ESCALAS, lista);
       return;
     }
-    const ref = collection(this.firestore, 'escalas');
-    return await addDoc(ref, escala);
+    return await this.runInContext(() => {
+      const ref = collection(this.firestore, 'escalas');
+      return addDoc(ref, escala);
+    });
   }
 
   async deleteEscala(id: string) {
@@ -90,8 +123,10 @@ export class FirestoreService {
       this.salvarLocais(STORAGE_ESCALAS, this.lerLocais<any>(STORAGE_ESCALAS).filter(e => e.id !== id));
       return;
     }
-    const ref = doc(this.firestore, `escalas/${id}`);
-    return await deleteDoc(ref);
+    return await this.runInContext(() => {
+      const ref = doc(this.firestore, `escalas/${id}`);
+      return deleteDoc(ref);
+    });
   }
 
   async deleteAllEscalas() {
@@ -99,9 +134,11 @@ export class FirestoreService {
       this.salvarLocais(STORAGE_ESCALAS, []);
       return;
     }
-    const ref = collection(this.firestore, 'escalas');
-    const snapshot = await getDocs(ref);
-    await Promise.all(snapshot.docs.map(d => deleteDoc(doc(this.firestore, `escalas/${d.id}`))));
+    const snapshot = await this.runInContext(() => {
+      const ref = collection(this.firestore, 'escalas');
+      return getDocs(ref);
+    });
+    await Promise.all(snapshot.docs.map(d => this.runInContext(() => deleteDoc(doc(this.firestore, `escalas/${d.id}`)))));
   }
 
   async updateEscala(id: string, data: any) {
@@ -110,8 +147,10 @@ export class FirestoreService {
       this.salvarLocais(STORAGE_ESCALAS, lista);
       return;
     }
-    const ref = doc(this.firestore, `escalas/${id}`);
-    return await updateDoc(ref, data);
+    return await this.runInContext(() => {
+      const ref = doc(this.firestore, `escalas/${id}`);
+      return updateDoc(ref, data);
+    });
   }
 
   async addUsuario(usuario: any) {
@@ -123,8 +162,10 @@ export class FirestoreService {
       this.salvarLocais(STORAGE_USUARIOS, lista);
       return;
     }
-    const ref = doc(this.firestore, `usuarios/${usuario.uid}`);
-    return await setDoc(ref, usuario);
+    return await this.runInContext(() => {
+      const ref = doc(this.firestore, `usuarios/${usuario.uid}`);
+      return setDoc(ref, usuario);
+    });
   }
 
   async addFamilia(nome: string) {
@@ -134,7 +175,7 @@ export class FirestoreService {
       this.salvarLocais(STORAGE_FAMILIAS, lista);
       return;
     }
-    return await addDoc(collection(this.firestore, 'familias'), { nome, membros: [] });
+    return await this.runInContext(() => addDoc(collection(this.firestore, 'familias'), { nome, membros: [] }));
   }
 
   async updateFamilia(id: string, dados: any) {
@@ -143,8 +184,10 @@ export class FirestoreService {
       this.salvarLocais(STORAGE_FAMILIAS, lista);
       return;
     }
-    const ref = doc(this.firestore, `familias/${id}`);
-    return await updateDoc(ref, dados);
+    return await this.runInContext(() => {
+      const ref = doc(this.firestore, `familias/${id}`);
+      return updateDoc(ref, dados);
+    });
   }
 
   async deleteFamilia(id: string) {
@@ -152,8 +195,10 @@ export class FirestoreService {
       this.salvarLocais(STORAGE_FAMILIAS, this.familiasLocais().filter(f => f.id !== id));
       return;
     }
-    const ref = doc(this.firestore, `familias/${id}`);
-    return await deleteDoc(ref);
+    return await this.runInContext(() => {
+      const ref = doc(this.firestore, `familias/${id}`);
+      return deleteDoc(ref);
+    });
   }
 
   async updateUsuario(id: string, data: any) {
@@ -162,8 +207,10 @@ export class FirestoreService {
       this.salvarLocais(STORAGE_USUARIOS, lista);
       return;
     }
-    const ref = doc(this.firestore, `usuarios/${id}`);
-    return await updateDoc(ref, data);
+    return await this.runInContext(() => {
+      const ref = doc(this.firestore, `usuarios/${id}`);
+      return updateDoc(ref, data);
+    });
   }
 
   async deleteUsuario(id: string) {
@@ -171,8 +218,10 @@ export class FirestoreService {
       this.salvarLocais(STORAGE_USUARIOS, this.usuariosLocais().filter(u => u.id !== id && u.uid !== id));
       return;
     }
-    const ref = doc(this.firestore, `usuarios/${id}`);
-    return await deleteDoc(ref);
+    return await this.runInContext(() => {
+      const ref = doc(this.firestore, `usuarios/${id}`);
+      return deleteDoc(ref);
+    });
   }
 
   async addUserIndisponibilidade(uid: string, ministerio: string, data: string, turno: string | undefined, motivo: string) {
@@ -192,8 +241,10 @@ export class FirestoreService {
       this.salvarLocais(STORAGE_USUARIOS, lista);
       return;
     }
-    const ref = doc(this.firestore, `usuarios/${uid}`);
-    const snap = await getDoc(ref);
+    const snap = await this.runInContext(() => {
+      const ref = doc(this.firestore, `usuarios/${uid}`);
+      return getDoc(ref);
+    });
     if (!snap.exists()) return;
     const key = (i: any) => `${i.ministerio}|${i.data}|${i.turno || ''}`;
     const indisps = (snap.data()['indisponibilidades'] || []).filter(
@@ -203,7 +254,10 @@ export class FirestoreService {
     if (motivo) entry.motivo = motivo;
     if (turno) entry.turno = turno;
     indisps.push(entry);
-    await updateDoc(ref, { indisponibilidades: indisps });
+    return await this.runInContext(() => {
+      const ref = doc(this.firestore, `usuarios/${uid}`);
+      return updateDoc(ref, { indisponibilidades: indisps });
+    });
   }
 
   async removeUserIndisponibilidade(uid: string, ministerio: string, data: string, turno?: string) {
@@ -218,13 +272,18 @@ export class FirestoreService {
       this.salvarLocais(STORAGE_USUARIOS, lista);
       return;
     }
-    const ref = doc(this.firestore, `usuarios/${uid}`);
-    const snap = await getDoc(ref);
+    const snap = await this.runInContext(() => {
+      const ref = doc(this.firestore, `usuarios/${uid}`);
+      return getDoc(ref);
+    });
     if (!snap.exists()) return;
     const indisps = (snap.data()['indisponibilidades'] || []).filter(
       (i: any) => !(i.ministerio === ministerio && i.data === data && (i.turno || '') === (turno || ''))
     );
-    await updateDoc(ref, { indisponibilidades: indisps });
+    return await this.runInContext(() => {
+      const ref = doc(this.firestore, `usuarios/${uid}`);
+      return updateDoc(ref, { indisponibilidades: indisps });
+    });
   }
 
   resetarDadosLocais() {

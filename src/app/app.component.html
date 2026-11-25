@@ -12,7 +12,8 @@
       <ng-container *ngIf="usuario; else semSessao">
         <div class="menu-user-info">
           <ion-avatar class="menu-avatar">
-            <span class="avatar-text">{{ usuario.nome.substring(0, 1) }}</span>
+            <img *ngIf="usuario.foto" [src]="usuario.foto" alt="Foto do Usuário" />
+            <span *ngIf="!usuario.foto" class="avatar-text">{{ usuario.nome.substring(0, 1) }}</span>
           </ion-avatar>
           <h3 class="menu-nome">{{ usuario.nome }}</h3>
           <p class="menu-email">{{ usuario.email }}</p>

@@ -14,50 +14,48 @@
 
 <ion-content class="ion-padding">
 
-  <ng-container *ngIf="mensagens.length > 0; else vazio">
+  <!-- Spinner de Carregamento Inicial -->
+  <div *ngIf="carregando" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando mensagens...</p>
+  </div>
 
-    <ion-list>
+  <ng-container *ngIf="!carregando && mensagens.length > 0; else vazio">
 
-      <ion-item *ngFor="let msg of mensagens">
-
-        <ion-label>
-
-          <h2>{{ msg.nome }}</h2>
-
-          <div class="info-linha">
-
-            <span class="ministerio-badge">
-              {{ msg.ministerio }}
-            </span>
-
-            <span class="data-text">
-              {{ formatarData(msg.data) }}
-            </span>
-
-            <span class="turno" *ngIf="msg.turno">
-              ({{ msg.turno === 'manha' ? 'Manhã' : 'Noite' }})
-            </span>
-
+    <div class="mensagens-container">
+      <div class="mensagem-card-item" *ngFor="let msg of mensagens">
+        
+        <!-- Avatar Limpo (com foto ou silhueta sem letras ao lado) -->
+        <div class="avatar-box">
+          <img *ngIf="msg.foto" [src]="msg.foto" alt="" class="avatar-img" />
+          <div *ngIf="!msg.foto" class="avatar-default">
+            <ion-icon name="person"></ion-icon>
           </div>
+        </div>
 
-          <p *ngIf="msg.motivo" class="motivo-text">
-            {{ msg.motivo }}
-          </p>
+        <!-- Conteúdo: Nome e Motivo -->
+        <div class="mensagem-conteudo">
+          <span class="mensagem-nome">{{ msg.nome }}</span>
+          <span class="mensagem-motivo">{{ msg.motivoTexto }}</span>
+        </div>
 
-        </ion-label>
+        <!-- Data no canto direito -->
+        <div class="mensagem-data">
+          {{ msg.dataResumida }}
+        </div>
 
-      </ion-item>
-
-    </ion-list>
+      </div>
+    </div>
 
   </ng-container>
 
   <ng-template #vazio>
-
-    <p class="vazio">
-      Nenhuma mensagem.
-    </p>
-
+    <div class="vazio-container">
+      <ion-icon name="mail-outline" class="vazio-icon"></ion-icon>
+      <p class="vazio">Nenhuma mensagem ou motivo de indisponibilidade registrado.</p>
+    </div>
   </ng-template>
 
 </ion-content>
+
+<app-bottom-nav activeTab="mensagens"></app-bottom-nav>

@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../services/auth';
 import { FirestoreService } from '../services/firestore';
@@ -23,6 +24,7 @@ export class CompartilharPage implements OnInit {
   private firestoreService = inject(FirestoreService);
   private escalaService = inject(EscalaService);
   private shareService = inject(ShareService);
+  private loadingCtrl = inject(LoadingController);
 
   private mes = new Date().getMonth();
   private ano = new Date().getFullYear();
@@ -78,16 +80,32 @@ export class CompartilharPage implements OnInit {
   }
 
   async compartilharMinisterio(grupo: GrupoMinisterio) {
+    const loading = await this.loadingCtrl.create({
+      message: 'Preparando compartilhamento...',
+      duration: 1500,
+      spinner: 'crescent'
+    });
+    await loading.present();
+
     const texto = this.shareService.gerarTextoMinisterio(grupo.ministerio, grupo.escalas, this.mes, this.ano);
     await this.shareService.compartilhar(`Escalas - ${grupo.nome}`, texto);
+    await loading.dismiss();
   }
 
   async compartilharTudo() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Preparando escalas completas...',
+      duration: 1500,
+      spinner: 'crescent'
+    });
+    await loading.present();
+
     const texto = this.shareService.gerarTextoTudo(
       this.grupos.map(g => ({ ministerio: g.ministerio, escalas: g.escalas })),
       this.mes,
       this.ano
     );
     await this.shareService.compartilhar('Escalas do mês', texto);
+    await loading.dismiss();
   }
 }

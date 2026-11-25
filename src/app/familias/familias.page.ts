@@ -48,6 +48,16 @@ export class FamiliasPage implements OnInit {
     return u ? u.nome : uid;
   }
 
+  getInicialMembro(uid: string): string {
+    const nome = this.getNomeMembro(uid);
+    return nome ? nome.charAt(0).toUpperCase() : '?';
+  }
+
+  getFotoMembro(uid: string): string | null {
+    const u = this.usuarios.find(x => x.uid === uid);
+    return u?.foto || u?.photoURL || null;
+  }
+
   getDisponiveis(familia: any): any[] {
     const membros = new Set(familia.membros || []);
     return this.usuarios.filter(u => !membros.has(u.uid));

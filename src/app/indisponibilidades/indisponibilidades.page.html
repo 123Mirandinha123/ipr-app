@@ -14,42 +14,52 @@
 
 <ion-content class="ion-padding">
 
-  <ng-container *ngIf="ministerios.length > 0; else vazio">
-
-    <p class="info-text">
+  <!-- Bloco Superior Informativo com Ícone -->
+  <div class="instrucao-wrapper">
+    <div class="instrucao-icon-box">
+      <ion-icon name="calendar-clear-outline"></ion-icon>
+    </div>
+    <p class="instrucao-texto">
       Selecione um ministério para gerenciar suas indisponibilidades
     </p>
+  </div>
 
-    <ion-list>
+  <ng-container *ngIf="ministerios.length > 0; else vazio">
 
-      <ion-item
+    <div class="ministerios-container">
+      <div
+        class="indisp-card-item"
         *ngFor="let m of ministerios"
-        button
-        detail
         (click)="abrirPorMinisterio(m.chave)"
       >
-        <ion-label>
-
-          <h2>{{ m.nome }}</h2>
-
-          <p class="quantidade">
-            {{ m.qtd }} indisponibilidade(s)
-          </p>
-
-        </ion-label>
-
-      </ion-item>
-
-    </ion-list>
+        <div class="card-left">
+          <div
+            class="ministerio-icon-box"
+            [style.color]="corIconeMinisterio(m.chave)"
+            [style.border-color]="corIconeMinisterio(m.chave)"
+          >
+            <ion-icon [name]="iconeMinisterio(m.chave)"></ion-icon>
+          </div>
+          <div class="ministerio-textos">
+            <span class="ministerio-nome">{{ m.nome }}</span>
+            <span class="ministerio-qtd">
+              {{ m.qtd }} indisponibilidade(s)
+            </span>
+          </div>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="chevron-arrow"></ion-icon>
+      </div>
+    </div>
 
   </ng-container>
 
   <ng-template #vazio>
-
-    <p class="vazio">
-      Nenhum ministério disponível
-    </p>
-
+    <div class="vazio-container">
+      <ion-icon name="close-circle-outline" class="vazio-icon"></ion-icon>
+      <p class="vazio">Nenhum ministério disponível</p>
+    </div>
   </ng-template>
 
 </ion-content>
+
+<app-bottom-nav activeTab="todos"></app-bottom-nav>

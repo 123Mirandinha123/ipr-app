@@ -1,188 +1,219 @@
-/* ===================== */
-/* Tema */
-/* ===================== */
-
 ion-content {
-  --background: #0b0b0b;
+  --background:
+    radial-gradient(circle at 50% 8%, rgba(29, 78, 216, 0.4) 0%, rgba(10, 15, 29, 0.98) 75%),
+    url('/assets/FundoIpr.png') center center / cover no-repeat;
+  --padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+  --color: #ffffff;
 }
 
+/* ===================== */
+/* Toolbar (Padrão Home) */
+/* ===================== */
 ion-toolbar {
-  --background: #111827;
-  --color: #ffffff;
-  border-bottom: 1px solid rgba(33, 150, 243, .2);
+  --background: #084386 !important;
+  --color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 ion-title {
-  color: #ffffff;
+  color: #ffffff !important;
   font-weight: 700;
+  font-size: 1.2rem;
 }
 
 ion-back-button,
 ion-menu-button {
-  --color: #42a5f5;
+  --color: #ffffff !important;
+  color: #ffffff !important;
 }
 
 /* ===================== */
-/* Texto superior */
+/* Instrução no Topo     */
 /* ===================== */
-
-.info-text {
-  color: #9ca3af;
-  font-size: 14px;
-  margin-bottom: 18px;
+.instrucao-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(17, 24, 39, 0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 20px;
+  padding: 14px 18px;
+  margin-top: 6px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 16px rgba(56, 189, 248, 0.15);
 }
 
-/* ===================== */
-/* Lista */
-/* ===================== */
-
-ion-list {
-  background: transparent;
+.instrucao-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1.5px solid #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #38bdf8;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+  flex-shrink: 0;
 }
 
-ion-item {
-
-  --background: #151515;
-  --color: white;
-
-  margin-bottom: 14px;
-
-  border-radius: 16px;
-
-  --padding-start: 18px;
-  --inner-padding-end: 18px;
-  --min-height: 72px;
-
-  border: 1px solid rgba(33,150,243,.12);
-
-  transition: .25s ease;
-
-  box-shadow: 0 6px 18px rgba(0,0,0,.25);
-}
-
-ion-item:hover {
-
-  --background: #1d2738;
-
-  transform: translateY(-2px);
-
-  border-color: rgba(66,165,245,.35);
-}
-
-ion-label h2 {
-
-  color: white;
-
-  font-size: 17px;
-
-  font-weight: 600;
-
-  margin-bottom: 6px;
-}
-
-.quantidade {
-
-  color: #42a5f5;
-
-  font-size: 13px;
-
+.instrucao-texto {
   margin: 0;
-}
-
-ion-item::part(detail-icon) {
-  color: #42a5f5;
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  font-weight: 600;
 }
 
 /* ===================== */
-/* Estado vazio */
+/* Cards de Ministérios  */
 /* ===================== */
+.ministerios-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.indisp-card-item {
+  background: rgba(17, 24, 39, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(56, 189, 248, 0.4);
+  border-radius: 22px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 18px rgba(56, 189, 248, 0.15);
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.indisp-card-item:active {
+  transform: scale(0.98);
+  border-color: #38bdf8;
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.55);
+}
+
+.card-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ministerio-icon-box {
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1.5px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+  flex-shrink: 0;
+}
+
+.ministerio-textos {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ministerio-nome {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff !important;
+  letter-spacing: -0.2px;
+}
+
+.ministerio-qtd {
+  font-size: 0.9rem;
+  color: #94a3b8 !important;
+  font-weight: 500;
+}
+
+.chevron-arrow {
+  font-size: 22px;
+  color: #38bdf8 !important;
+}
+
+/* ===================== */
+/* Vazio                 */
+/* ===================== */
+.vazio-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.vazio-icon {
+  font-size: 48px;
+  color: #475569;
+  margin-bottom: 10px;
+}
 
 .vazio {
-
-  text-align: center;
-
-  color: #8b8b8b;
-
-  margin-top: 40px;
-
-  font-size: 15px;
+  color: #94a3b8;
+  font-size: 0.98rem;
 }
 
 /* ===================== */
-/* Tema claro */
+/* Adaptação Modo Claro  */
 /* ===================== */
-
 @media (prefers-color-scheme: light) {
-
-  ion-content {
-    --background: #f3f5f9;
-  }
-
   ion-toolbar {
-    --background: #ffffff;
-    --color: #111827;
-    border-bottom: 1px solid rgba(21, 101, 192, .15);
+    --background: #084386 !important;
+    --color: #ffffff !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   ion-title {
-    color: #111827;
+    color: #ffffff !important;
   }
 
-  .info-text {
-    color: #4b5563;
+  ion-back-button,
+  ion-menu-button {
+    --color: #ffffff !important;
+    color: #ffffff !important;
   }
 
-  ion-item {
-    --background: #ffffff;
-    --color: #111827;
-    border: 1px solid rgba(21, 101, 192, .12);
-    box-shadow: 0 6px 18px rgba(15, 23, 42, .08);
+  .instrucao-wrapper {
+    background: #ffffff;
+    border-color: rgba(59, 130, 246, 0.2);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
   }
 
-  ion-item:hover {
-    --background: #eef1f6;
+  .instrucao-texto {
+    color: #334155;
   }
 
-  ion-label h2 {
-    color: #111827;
+  .indisp-card-item {
+    background: #ffffff;
+    border-color: rgba(59, 130, 246, 0.25);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  }
+
+  .ministerio-nome {
+    color: #111827 !important;
+  }
+
+  .ministerio-qtd {
+    color: #64748b !important;
+  }
+
+  .chevron-arrow {
+    color: #0284c7 !important;
   }
 
   .vazio {
-    color: #6b7280;
+    color: #64748b;
   }
-}
-
-/* ===================== */
-/* Animação */
-/* ===================== */
-
-ion-item {
-
-  animation: aparecer .3s ease;
-}
-
-@keyframes aparecer {
-
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-}
-
-/* ===================== */
-/* Responsivo */
-/* ===================== */
-
-@media (max-width: 480px) {
-
-  ion-item {
-    --min-height: 66px;
-  }
-
 }
