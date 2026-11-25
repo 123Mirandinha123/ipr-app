@@ -4,11 +4,7 @@ import { ModalController } from '@ionic/angular';
 @Component({
   selector: 'app-editar-escala-modal',
   templateUrl: 'editar-escala-modal.component.html',
-  styles: [`
-    .section-label { font-weight: 600; font-size: 0.95em; color: var(--ion-color-primary); margin: 16px 0 4px; }
-    .add-item { --min-height: 36px; font-size: 0.9em; }
-    .add-item ion-label { opacity: 0.8; }
-  `],
+  styleUrls: ['editar-escala-modal.component.scss'],
   standalone: false
 })
 export class EditarEscalaModalComponent {
@@ -148,6 +144,15 @@ export class EditarEscalaModalComponent {
     const canon = this.funcaoCanonica(funcao);
     const padrao = this.funcoesDisponiveis.find(f => this.funcaoCanonica(f) === canon);
     return padrao || funcao;
+  }
+
+  formatarPrimeiraMaiuscula(texto: string): string {
+    if (!texto) return '';
+    return texto.charAt(0).toUpperCase() + texto.slice(1);
+  }
+
+  formatarNomeMinisterio(): string {
+    return this.formatarPrimeiraMaiuscula(this.ministerio);
   }
 
   save() {

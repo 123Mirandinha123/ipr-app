@@ -1,60 +1,131 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Indisponibilidades</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="cancel()">Fechar</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class="modal-container">
 
-<ion-content class="ion-padding">
-  <div class="calendar-nav">
-    <ion-button fill="clear" (click)="prevMonth()">&lt;</ion-button>
-    <span class="month-title">{{ monthName() }} {{ currentYear }}</span>
-    <ion-button fill="clear" (click)="nextMonth()">&gt;</ion-button>
-  </div>
-
-  <div class="calendar-grid">
-    <div class="calendar-weekday" *ngFor="let wd of weekDays">{{ wd }}</div>
-    <div class="calendar-day empty" *ngFor="let _ of emptyCells"></div>
-    <div
-      class="calendar-day"
-      *ngFor="let day of daysInMonth"
-      [class.selectable]="isSelectable(day)"
-      [class.selected]="hasSelecao(day) && !isDomingo(day)"
-      [class.disabled]="!isSelectable(day)"
-      (click)="toggleDay(day)"
-    >
-      {{ day }}
-      <div class="turno-indicators" *ngIf="isDomingo(day) && isSelectable(day)">
-        <span class="turno-dot" [class.active]="hasTurno(day, 'manha')" title="Manhã"></span>
-        <span class="turno-dot" [class.active]="hasTurno(day, 'noite')" title="Noite"></span>
-      </div>
-    </div>
-  </div>
-
-  <div class="ion-padding-top">
-    <ng-container *ngIf="selectedCount > 0">
-      <p style="color: var(--ion-color-medium); font-size: 0.9em;">
-        {{ selectedCount }} selecionado(s)
-      </p>
-      <div class="selected-items">
-        <div class="selected-item" *ngFor="let item of selectedItems">
-          <span>{{ formatSelectedItem(item) }}</span>
-          <ion-button fill="clear" color="danger" size="small" (click)="toggleItem(item.data, item.turno)">
-            Remover
-          </ion-button>
+    <!-- Header do Modal -->
+    <div class="modal-header-bar">
+      <div class="header-left">
+        <div class="header-icon-box">
+          <ion-icon name="calendar-outline"></ion-icon>
+        </div>
+        <div class="header-textos">
+          <h2 class="header-titulo">Indisponibilidades</h2>
+          <p class="header-subtitulo">
+            Selecione os dias em que você<br>não poderá participar.
+          </p>
         </div>
       </div>
+      <button class="btn-close-modal" (click)="cancel()" title="Fechar">
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+    </div>
 
-      <ion-item>
-        <ion-label position="stacked">Motivo</ion-label>
-        <ion-input [(ngModel)]="motivo" placeholder="Ex: Viagem, compromisso..."></ion-input>
-      </ion-item>
-    </ng-container>
+    <!-- Navegação de Mês -->
+    <div class="month-nav-row">
+      <button class="month-nav-btn" (click)="prevMonth()" [disabled]="!canPrevMonth">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </button>
+      <span class="month-nav-title">{{ monthName() }} {{ currentYear }}</span>
+      <button class="month-nav-btn" (click)="nextMonth()">
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </button>
+    </div>
 
-    <ion-button expand="block" color="primary" (click)="confirm()">
-      Confirmar
-    </ion-button>
+    <!-- Grid do Calendário -->
+    <div class="calendar-grid">
+      <div class="weekday-label" *ngFor="let wd of weekDays">{{ wd }}</div>
+      <div class="day-cell empty" *ngFor="let _ of emptyCells"></div>
+      <div
+        class="day-cell"
+        *ngFor="let day of daysInMonth"
+        [class.selectable]="isSelectable(day)"
+        [class.selected]="hasSelecao(day)"
+        [class.com-registro]="!hasSelecao(day) && temRegistroPrevio(day)"
+        (click)="toggleDay(day)"
+      >
+        {{ day }}
+      </div>
+    </div>
+
+    <!-- Legenda -->
+    <div class="legend-row">
+      <div class="legend-item">
+        <div class="legend-dot-red"></div>
+        <span>Selecionado</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-circle-blue"></div>
+        <span>Com registro</span>
+      </div>
+    </div>
+
+    <!-- Seção de Configuração dos Dias -->
+    <div *ngIf="dayItems.length > 0">
+      <h3 class="section-title">Quando você estará indisponível?</h3>
+
+      <div class="cards-container">
+        <div class="day-indisp-card" *ngFor="let item of dayItems; let idx = index">
+          <div class="card-top-row">
+            <div class="card-title-left">
+              <div class="badge-letter">{{ item.diaSemana === 'quinta' ? 'Q' : 'D' }}</div>
+              <span class="card-date-text">{{ item.dataFormatada }}</span>
+            </div>
+            <button class="btn-remover-day" (click)="removerDay(item)">
+              <ion-icon name="trash-outline"></ion-icon>
+              <span>Remover</span>
+            </button>
+          </div>
+
+          <!-- Turnos apenas para Domingo (Quinta não possui turnos) -->
+          <div class="turnos-row" *ngIf="item.diaSemana === 'domingo'">
+            <button
+              type="button"
+              class="turno-pill-btn"
+              [class.active]="item.manha"
+              (click)="toggleTurno(item, 'manha')"
+            >
+              <ion-icon name="sunny-outline"></ion-icon>
+              <span>Manhã</span>
+              <div class="turno-check-badge" *ngIf="item.manha">✓</div>
+            </button>
+
+            <button
+              type="button"
+              class="turno-pill-btn"
+              [class.active]="item.noite"
+              (click)="toggleTurno(item, 'noite')"
+            >
+              <ion-icon name="moon-outline"></ion-icon>
+              <span>Noite</span>
+              <div class="turno-check-badge" *ngIf="item.noite">✓</div>
+            </button>
+          </div>
+
+          <!-- Campo de Motivo (opcional) -->
+          <div class="motivo-box">
+            <div class="motivo-label">
+              <ion-icon name="chatbox-outline"></ion-icon>
+              <span>Motivo (opcional)</span>
+            </div>
+            <div class="motivo-input-wrapper">
+              <input
+                [id]="'motivo-input-' + idx"
+                [name]="'motivo-' + idx"
+                type="text"
+                [(ngModel)]="item.motivo"
+                placeholder="Ex: Compromisso, viagem..."
+                class="motivo-input-field"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão de Confirmação Principal -->
+    <button class="btn-confirmar-indisp" (click)="confirm()">
+      <ion-icon name="checkmark-outline"></ion-icon>
+      <span>Confirmar indisponibilidades</span>
+    </button>
+
   </div>
 </ion-content>

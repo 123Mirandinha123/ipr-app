@@ -16,10 +16,13 @@ export class EscalasDoDiaPage implements OnInit {
 
   escalas: any[] = [];
   dataHoje = '';
+  carregando = true;
 
   async ngOnInit() {
     this.dataHoje = new Date().toISOString().split('T')[0];
+    this.carregando = true;
     const todas = await firstValueFrom(this.firestoreService.getEscalas());
+    this.carregando = false;
     if (!todas) return;
     this.escalas = todas
       .filter(e => e['data'] === this.dataHoje)

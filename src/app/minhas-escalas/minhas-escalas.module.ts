@@ -4,13 +4,15 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { MinhasEscalasPage } from './minhas-escalas.page';
 import { MinhasEscalasPageRoutingModule } from './minhas-escalas-routing.module';
+import { BottomNavComponent } from '../components/bottom-nav.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MinhasEscalasPageRoutingModule
+    MinhasEscalasPageRoutingModule,
+    BottomNavComponent
   ],
   declarations: [MinhasEscalasPage]
 })

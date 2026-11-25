@@ -1,0 +1,39 @@
+<div class="resultado-modal-card">
+  <div class="modal-header">
+    <div class="header-icon-circle">
+      <ion-icon name="calendar" *ngIf="total > 0"></ion-icon>
+      <ion-icon name="information-circle" *ngIf="total === 0"></ion-icon>
+    </div>
+    <h2 class="modal-title">{{ titulo }}</h2>
+    <p class="modal-subtitle" *ngIf="subtitulo">{{ subtitulo }}</p>
+  </div>
+
+  <div class="modal-body">
+    <div class="total-badge" *ngIf="total > 0">
+      <ion-icon name="checkmark-circle"></ion-icon>
+      <span>{{ total }} {{ total === 1 ? 'escala criada' : 'escalas criadas' }}</span>
+    </div>
+
+    <div class="mensagem-simples" *ngIf="mensagemSimples">
+      <p>{{ mensagemSimples }}</p>
+    </div>
+
+    <div class="lista-detalhes" *ngIf="detalhes && detalhes.length > 0">
+      <div
+        class="item-detalhe"
+        *ngFor="let d of detalhes"
+        [class.item-aviso]="isAviso(d)"
+        [class.item-sucesso]="!isAviso(d)"
+      >
+        <span class="item-icon">{{ isAviso(d) ? '⚠️' : '✅' }}</span>
+        <span class="item-text">{{ d }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn-fechar" (click)="fechar()">
+      <span>Entendido</span>
+    </button>
+  </div>
+</div>

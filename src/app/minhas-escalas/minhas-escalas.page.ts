@@ -3,12 +3,13 @@ import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../services/auth';
 import { FirestoreService } from '../services/firestore';
 
-interface MinhaEscala {
+export interface MinhaEscala {
   data: string;
   ministerio: string;
   funcao: string;
   nome: string;
   turno?: string;
+  grupoTurno: 'manha' | 'quinta' | 'noite';
 }
 
 @Component({
@@ -22,17 +23,43 @@ export class MinhasEscalasPage implements OnInit {
   private authService = inject(AuthService);
   private firestoreService = inject(FirestoreService);
 
-  escalas: MinhaEscala[] = [];
+  todasEscalas: MinhaEscala[] = [];
+  filtroMinisterio: string = 'todos';
+  ministeriosUsuario: { chave: string; nome: string }[] = [];
+  carregando = true;
 
   async ngOnInit() {
+    await this.carregarMinhasEscalas();
+  }
+
+  async ionViewWillEnter() {
+    await this.carregarMinhasEscalas();
+  }
+
+  async carregarMinhasEscalas() {
     const user = this.authService.currentUser;
-    if (!user) return;
+    if (!user) {
+      this.carregando = false;
+      return;
+    }
 
     const nome = user.nome?.trim();
     const nomeLower = nome?.toLowerCase();
-    if (!nomeLower) return;
+    if (!nomeLower) {
+      this.carregando = false;
+      return;
+    }
 
+    // Carregar ministérios do usuário para as pílulas de filtro
+    const ministeriosDoUser = (user.ministerios || []).map(m => ({
+      chave: m.nome.toLowerCase().replace(/\s+/g, ''),
+      nome: this.formatarMinisterio(m.nome)
+    }));
+    this.ministeriosUsuario = ministeriosDoUser;
+
+    this.carregando = true;
     const todas = await firstValueFrom(this.firestoreService.getEscalas());
+    this.carregando = false;
     if (!todas) return;
 
     const resultado: MinhaEscala[] = [];
@@ -41,15 +68,18 @@ export class MinhasEscalasPage implements OnInit {
     for (const e of todas) {
       const data = e['data'];
       const ministerio = e['ministerio'];
-      const turno = e['turno'];
+      const turnoOriginal = (e['turno'] || '').toLowerCase();
       if (!data || !ministerio) continue;
+
+      // Classificar o grupo do turno: 'manha', 'quinta' ou 'noite'
+      const grupoTurno = this.determinarGrupoTurno(data, turnoOriginal);
 
       const funcoes: Record<string, string[]> = e['funcoes'] || {};
       let encontrou = false;
 
       for (const [funcao, nomes] of Object.entries(funcoes)) {
         if ((nomes || []).map((n: string) => n.trim().toLowerCase()).includes(nomeLower)) {
-          resultado.push({ data, ministerio, funcao, nome: nomeFormatado, turno });
+          resultado.push({ data, ministerio, funcao, nome: nomeFormatado, turno: turnoOriginal, grupoTurno });
           encontrou = true;
           break;
         }
@@ -58,19 +88,58 @@ export class MinhasEscalasPage implements OnInit {
 
       const lideres: string[] = (e['lideres'] || []).map((n: string) => n.trim().toLowerCase());
       if (lideres.includes(nomeLower)) {
-        resultado.push({ data, ministerio, funcao: 'Líder', nome: nomeFormatado, turno });
+        resultado.push({ data, ministerio, funcao: 'Líder', nome: nomeFormatado, turno: turnoOriginal, grupoTurno });
         continue;
       }
 
       const membros: string[] = (e['membros'] || []).map((n: string) => n.trim().toLowerCase());
       if (membros.includes(nomeLower)) {
-        resultado.push({ data, ministerio, funcao: 'Membro', nome: nomeFormatado, turno });
+        resultado.push({ data, ministerio, funcao: 'Membro', nome: nomeFormatado, turno: turnoOriginal, grupoTurno });
         continue;
       }
     }
 
     resultado.sort((a, b) => a.data.localeCompare(b.data));
-    this.escalas = resultado;
+    this.todasEscalas = resultado;
+  }
+
+  determinarGrupoTurno(dataStr: string, turno: string): 'manha' | 'quinta' | 'noite' {
+    if (turno === 'quinta') return 'quinta';
+    const [ano, mes, dia] = dataStr.split('-').map(Number);
+    const d = new Date(ano, mes - 1, dia);
+    if (d.getDay() === 4) { // Quinta-feira
+      return 'quinta';
+    }
+    if (turno === 'noite') {
+      return 'noite';
+    }
+    return 'manha';
+  }
+
+  setFiltro(chave: string) {
+    this.filtroMinisterio = chave;
+  }
+
+  get escalasFiltradas(): MinhaEscala[] {
+    if (this.filtroMinisterio === 'todos') {
+      return this.todasEscalas;
+    }
+    return this.todasEscalas.filter(e => {
+      const chaveMin = e.ministerio.toLowerCase().replace(/\s+/g, '');
+      return chaveMin === this.filtroMinisterio;
+    });
+  }
+
+  get escalasManha(): MinhaEscala[] {
+    return this.escalasFiltradas.filter(e => e.grupoTurno === 'manha');
+  }
+
+  get escalasQuinta(): MinhaEscala[] {
+    return this.escalasFiltradas.filter(e => e.grupoTurno === 'quinta');
+  }
+
+  get escalasNoite(): MinhaEscala[] {
+    return this.escalasFiltradas.filter(e => e.grupoTurno === 'noite');
   }
 
   formatarData(dataStr: string): string {
@@ -94,7 +163,7 @@ export class MinhasEscalasPage implements OnInit {
       diaconos: '#795548'
     };
     const chave = nome?.toLowerCase().replace(/\s+/g, '');
-    return cores[chave] || '#999';
+    return cores[chave] || '#3b82f6';
   }
 
   formatarMinisterio(nome: string): string {

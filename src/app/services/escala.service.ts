@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { FirestoreService } from './firestore';
+import { Usuario, Escala, Familia, DataCultoTurno } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class EscalaService {
     const norm = this.normalizar(funcao);
     if (norm === 'vocal' || norm === 'vocalista') return 'vocal';
     if (norm === 'backvocal' || norm === 'back' || norm === 'backvocalista' || norm === 'backvocal') return 'backvocal';
-    if (norm === 'violonista' || norm === 'violao' || norm === 'viola') return 'vionolista';
+    if (norm === 'violonista' || norm === 'violao' || norm === 'viola' || norm === 'vionolista') return 'violonista';
     if (norm === 'bateria' || norm === 'percussao') return 'baterista';
     if (norm === 'teclado') return 'tecladista';
     if (norm === 'guitarra') return 'guitarrista';
@@ -136,6 +137,7 @@ export class EscalaService {
       tecladista: 3,
       baixista: 4,
       baterista: 5,
+      violonista: 6,
       vionolista: 6
     };
 

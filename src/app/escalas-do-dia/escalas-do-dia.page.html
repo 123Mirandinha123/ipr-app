@@ -12,48 +12,56 @@
 
 <ion-content class="ion-padding">
 
-  <div class="data-destaque">
-    {{ formatarData(dataHoje) }}
+  <!-- Spinner de Carregamento Inicial -->
+  <div *ngIf="carregando" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando escalas do dia...</p>
   </div>
 
-  <ng-container *ngIf="escalas.length > 0; else vazio">
-    <ion-card *ngFor="let escala of escalas" class="escala-card">
-      <ion-card-header>
-        <ion-card-title>
-          <span class="pill-ministerio" [style.background]="corMinisterio(escala.ministerio)">
-            {{ formatarMinisterio(escala.ministerio) }}
-          </span>
-          <span *ngIf="escala.turno" class="turno-texto">
-            {{ formatarTurno(escala.turno) }}
-          </span>
-        </ion-card-title>
-      </ion-card-header>
+  <ng-container *ngIf="!carregando">
+    <div class="data-destaque">
+      {{ formatarData(dataHoje) }}
+    </div>
 
-      <ion-card-content>
-        <ng-container *ngIf="getFuncoes(escala).length > 0">
-          <div *ngFor="let funcao of getFuncoes(escala)">
-            <p *ngIf="getNomesNaFuncao(escala, funcao).length > 0" class="funcao-linha">
-              {{ funcao }}: {{ getNomesNaFuncao(escala, funcao).join(', ') }}
-            </p>
+    <ng-container *ngIf="escalas.length > 0; else vazio">
+      <ion-card *ngFor="let escala of escalas" class="escala-card">
+        <ion-card-header>
+          <ion-card-title>
+            <span class="pill-ministerio" [style.background]="corMinisterio(escala.ministerio)">
+              {{ formatarMinisterio(escala.ministerio) }}
+            </span>
+            <span *ngIf="escala.turno" class="turno-texto">
+              {{ formatarTurno(escala.turno) }}
+            </span>
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ng-container *ngIf="getFuncoes(escala).length > 0">
+            <div *ngFor="let funcao of getFuncoes(escala)">
+              <p *ngIf="getNomesNaFuncao(escala, funcao).length > 0" class="funcao-linha">
+                {{ funcao }}: {{ getNomesNaFuncao(escala, funcao).join(', ') }}
+              </p>
+            </div>
+            <div *ngIf="getFuncoesVagas(escala).length > 0">
+              <p class="funcao-vaga" *ngFor="let vaga of getFuncoesVagas(escala)">
+                {{ vaga }}: —
+              </p>
+            </div>
+            <div *ngIf="getSemFuncao(escala).length > 0">
+              <p class="funcao-linha">{{ getSemFuncao(escala).join(', ') }}</p>
+            </div>
+          </ng-container>
+          <div *ngIf="getFuncoes(escala).length === 0">
+            <p class="funcao-linha">{{ getParticipantes(escala).join(', ') }}</p>
           </div>
-          <div *ngIf="getFuncoesVagas(escala).length > 0">
-            <p class="funcao-vaga" *ngFor="let vaga of getFuncoesVagas(escala)">
-              {{ vaga }}: —
-            </p>
-          </div>
-          <div *ngIf="getSemFuncao(escala).length > 0">
-            <p class="funcao-linha">{{ getSemFuncao(escala).join(', ') }}</p>
-          </div>
-        </ng-container>
-        <div *ngIf="getFuncoes(escala).length === 0">
-          <p class="funcao-linha">{{ getParticipantes(escala).join(', ') }}</p>
-        </div>
-      </ion-card-content>
-    </ion-card>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+
+    <ng-template #vazio>
+      <p class="vazio">Nenhuma escala para hoje.</p>
+    </ng-template>
   </ng-container>
-
-  <ng-template #vazio>
-    <p class="vazio">Nenhuma escala para hoje.</p>
-  </ng-template>
 
 </ion-content>

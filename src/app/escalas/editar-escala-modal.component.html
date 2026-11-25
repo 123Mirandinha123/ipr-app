@@ -2,57 +2,107 @@
   <ion-toolbar>
     <ion-title>Editar Escala</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="cancel()">Fechar</ion-button>
+      <button class="btn-close-modal" (click)="cancel()" title="Fechar" aria-label="Fechar">
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h2>
-    {{ formatarData(escala.data) }}
-    <span *ngIf="escala.turno" style="font-size:0.8em;color:var(--ion-color-primary);font-weight:400;">
-      {{ escala.turno === 'manha' ? 'Manhã' : 'Noite' }}
-    </span>
-    - {{ ministerio | titlecase }}
-  </h2>
 
-  <ion-list>
-    <ng-container *ngIf="!isLouvor">
-      <ion-item *ngFor="let nome of currentLideres">
-        <ion-label>{{ nome | uppercase }}</ion-label>
-        <ion-button slot="end" fill="clear" color="danger" size="small" (click)="removePessoa(nome, 'lider')">
-          Remover
-        </ion-button>
-      </ion-item>
-
-      <ion-item *ngFor="let nome of currentMembros">
-        <ion-label>{{ nome | uppercase }}</ion-label>
-        <ion-button slot="end" fill="clear" color="danger" size="small" (click)="removePessoa(nome, 'membro')">
-          Remover
-        </ion-button>
-      </ion-item>
-      <ion-item button class="add-item" *ngFor="let p of getDisponiveis('membro')" (click)="addPessoa(p.nome, 'membro')">
-        <ion-label>+ Adicionar {{ p.nome | uppercase }} na escala</ion-label>
-      </ion-item>
-    </ng-container>
-
-    <ng-container *ngFor="let funcao of getFuncoesKeys()">
-      <div class="section-label">{{ funcao | titlecase }}</div>
-      <ion-item *ngFor="let nome of currentFuncoes[funcao]">
-        <ion-label>{{ nome | uppercase }}</ion-label>
-        <ion-button slot="end" fill="clear" color="danger" size="small" (click)="removePessoa(nome, funcao)">
-          Remover
-        </ion-button>
-      </ion-item>
-      <ion-item button class="add-item" *ngFor="let p of getDisponiveis(funcao)" (click)="addPessoa(p.nome, funcao)">
-        <ion-label>+ Adicionar {{ p.nome | uppercase }} como {{ funcao | titlecase }}</ion-label>
-      </ion-item>
-    </ng-container>
-  </ion-list>
-
-  <div class="ion-padding-top">
-    <ion-button expand="block" color="primary" (click)="save()">
-      Salvar
-    </ion-button>
+  <!-- Cabeçalho do Culto: Data, Ministério e Turno -->
+  <div class="escala-header-box">
+    <div class="escala-header-title">
+      <span class="data-culto">{{ formatarData(escala.data) }} - {{ formatarNomeMinisterio() }}</span>
+      <span *ngIf="escala.turno" class="badge-turno" [class.noite]="escala.turno === 'noite'">
+        {{ escala.turno === 'manha' ? 'Manhã' : 'Noite' }}
+      </span>
+    </div>
   </div>
+
+  <!-- Containers por Cargo / Função -->
+  <div class="funcoes-container">
+
+    <!-- Ministérios sem cargos específicos (Líder / Membro) -->
+    <ng-container *ngIf="!isLouvor">
+      <div class="cargo-card">
+        <div class="cargo-card-header">
+          <span class="cargo-titulo">Líderes</span>
+          <span class="cargo-qtd">{{ currentLideres.length }} escalado(s)</span>
+        </div>
+        <div class="cargo-card-content">
+          <div class="voluntario-linha" *ngFor="let nome of currentLideres">
+            <span class="voluntario-nome">{{ nome | uppercase }}</span>
+            <button class="btn-remover" (click)="removePessoa(nome, 'lider')">Remover</button>
+          </div>
+          <button class="btn-adicionar" *ngFor="let p of getDisponiveis('lider')" (click)="addPessoa(p.nome, 'lider')">
+            <span>+ Adicionar <strong>{{ p.nome | uppercase }}</strong> como Líder</span>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </button>
+          <div class="sem-disponivel" *ngIf="currentLideres.length === 0 && getDisponiveis('lider').length === 0">
+            Nenhum integrante disponível
+          </div>
+        </div>
+      </div>
+
+      <div class="cargo-card">
+        <div class="cargo-card-header">
+          <span class="cargo-titulo">Equipe / Membros</span>
+          <span class="cargo-qtd">{{ currentMembros.length }} escalado(s)</span>
+        </div>
+        <div class="cargo-card-content">
+          <div class="voluntario-linha" *ngFor="let nome of currentMembros">
+            <span class="voluntario-nome">{{ nome | uppercase }}</span>
+            <button class="btn-remover" (click)="removePessoa(nome, 'membro')">Remover</button>
+          </div>
+          <button class="btn-adicionar" *ngFor="let p of getDisponiveis('membro')" (click)="addPessoa(p.nome, 'membro')">
+            <span>+ Adicionar <strong>{{ p.nome | uppercase }}</strong> na escala</span>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </button>
+          <div class="sem-disponivel" *ngIf="currentMembros.length === 0 && getDisponiveis('membro').length === 0">
+            Nenhum integrante disponível
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Ministérios com Cargos (ex: Louvor, etc.) -->
+    <ng-container *ngIf="isLouvor">
+      <div class="cargo-card" *ngFor="let funcao of getFuncoesKeys()">
+        <div class="cargo-card-header">
+          <span class="cargo-titulo">{{ formatarPrimeiraMaiuscula(funcao) }}</span>
+          <span class="cargo-qtd">{{ (currentFuncoes[funcao] || []).length }} escalado(s)</span>
+        </div>
+
+        <div class="cargo-card-content">
+          <!-- Voluntários já escalados nessa função -->
+          <div class="voluntario-linha" *ngFor="let nome of currentFuncoes[funcao]">
+            <span class="voluntario-nome">{{ nome | uppercase }}</span>
+            <button class="btn-remover" (click)="removePessoa(nome, funcao)">Remover</button>
+          </div>
+
+          <!-- Voluntários disponíveis para adicionar -->
+          <button class="btn-adicionar" *ngFor="let p of getDisponiveis(funcao)" (click)="addPessoa(p.nome, funcao)">
+            <span>+ Adicionar <strong>{{ p.nome | uppercase }}</strong> como {{ formatarPrimeiraMaiuscula(funcao) }}</span>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </button>
+
+          <!-- Mensagem quando não houver ninguém escalado nem disponível -->
+          <div class="sem-disponivel" *ngIf="(currentFuncoes[funcao] || []).length === 0 && getDisponiveis(funcao).length === 0">
+            Nenhum integrante disponível
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+
+  <!-- Botão Salvar -->
+  <div class="salvar-box">
+    <button class="btn-salvar" (click)="save()">
+      <span>Salvar</span>
+    </button>
+  </div>
+
 </ion-content>

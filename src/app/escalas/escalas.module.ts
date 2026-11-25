@@ -5,13 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { EscalasPage } from './escalas.page';
 import { EscalasPageRoutingModule } from './escalas-routing.module';
 import { EditarEscalaModalComponent } from './editar-escala-modal.component';
+import { BottomNavComponent } from '../components/bottom-nav.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EscalasPageRoutingModule
+    EscalasPageRoutingModule,
+    BottomNavComponent
   ],
   declarations: [EscalasPage, EditarEscalaModalComponent]
 })

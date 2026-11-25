@@ -1,0 +1,231 @@
+/* ===================== */
+/* Fundo e Modal         */
+/* ===================== */
+ion-content {
+  --background:
+    radial-gradient(circle at 50% 8%, rgba(29, 78, 216, 0.4) 0%, rgba(10, 15, 29, 0.98) 75%),
+    url('/assets/FundoIpr.png') center center / cover no-repeat;
+  --color: #ffffff;
+}
+
+/* ===================== */
+/* Toolbar & Fechar "X"  */
+/* ===================== */
+ion-toolbar {
+  --background: #084386 !important;
+  --color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+ion-title {
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.btn-close-modal {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 1.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: color 0.16s ease, background-color 0.16s ease;
+}
+
+.btn-close-modal:active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ===================== */
+/* Cabeçalho do Culto    */
+/* ===================== */
+.escala-header-box {
+  margin-top: 4px;
+  margin-bottom: 20px;
+}
+
+.escala-header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.data-culto {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.badge-turno {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  text-transform: capitalize;
+}
+
+.badge-turno.noite {
+  background: rgba(99, 102, 241, 0.22);
+  color: #c7d2fe;
+  border: 1px solid rgba(99, 102, 241, 0.35);
+}
+
+/* ===================== */
+/* Containers por Cargo  */
+/* ===================== */
+.funcoes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cargo-card {
+  background: rgba(17, 24, 39, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.cargo-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 6px;
+}
+
+.cargo-titulo {
+  color: #60a5fa;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.cargo-qtd {
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.cargo-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===================== */
+/* Linha de Voluntário   */
+/* ===================== */
+.voluntario-linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.voluntario-nome {
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.btn-remover {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 0.16s ease, color 0.16s ease;
+}
+
+.btn-remover:active {
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+}
+
+/* ===================== */
+/* Botão Adicionar       */
+/* ===================== */
+.btn-adicionar {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 10px 14px;
+  color: #93c5fd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: background-color 0.16s ease, border-color 0.16s ease;
+}
+
+.btn-adicionar strong {
+  color: #ffffff;
+}
+
+.btn-adicionar ion-icon {
+  font-size: 1.1rem;
+  color: #64748b;
+}
+
+.btn-adicionar:active {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+/* ===================== */
+/* Sem Disponíveis       */
+/* ===================== */
+.sem-disponivel {
+  color: #64748b;
+  font-size: 0.9rem;
+  font-style: italic;
+  padding: 4px 0;
+}
+
+/* ===================== */
+/* Botão Salvar          */
+/* ===================== */
+.salvar-box {
+  margin-top: 26px;
+  margin-bottom: 24px;
+}
+
+.btn-salvar {
+  width: 100%;
+  background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 22px;
+  padding: 16px 20px;
+  font-size: 1.12rem;
+  font-weight: 700;
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.4);
+  cursor: pointer;
+  transition: transform 0.16s ease;
+}
+
+.btn-salvar:active {
+  transform: scale(0.98);
+}

@@ -1,217 +1,307 @@
 ion-content {
-  --background: #0b0b0b;
+  --background:
+    radial-gradient(circle at 50% 8%, rgba(29, 78, 216, 0.4) 0%, rgba(10, 15, 29, 0.98) 75%),
+    url('/assets/FundoIpr.png') center center / cover no-repeat;
+  --padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px));
+  --color: #ffffff;
 }
 
 /* ===================== */
-/* Toolbar */
+/* Toolbar               */
 /* ===================== */
-
 ion-toolbar {
   --background: #111827;
   --color: #ffffff;
-  border-bottom: 1px solid rgba(33, 150, 243, .25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 ion-title {
   color: #ffffff;
   font-weight: 700;
+  font-size: 1.15rem;
 }
 
 ion-back-button,
 ion-menu-button {
-  --color: #42a5f5;
+  --color: #3b82f6;
 }
 
 /* ===================== */
-/* Lista */
+/* Spinner Carregamento  */
 /* ===================== */
-
-ion-list {
-  background: transparent;
-  padding: 0;
-}
-
-ion-item {
-  --background: #151515;
-  --color: #ffffff;
-
-  margin-bottom: 14px;
-
-  border-radius: 16px;
-
-  border: 1px solid rgba(33,150,243,.15);
-
-  --padding-start: 18px;
-  --inner-padding-end: 18px;
-  --min-height: 88px;
-
-  transition: .25s ease;
-
-  box-shadow: 0 6px 18px rgba(0,0,0,.30);
-
-  animation: aparecer .35s ease;
-}
-
-ion-item:hover {
-  --background: #1c2433;
-  transform: translateY(-2px);
-}
-
-/* ===================== */
-/* Ministério */
-/* ===================== */
-
-.pill-ministerio {
-
-  display: inline-block;
-
-  padding: 6px 14px;
-
-  border-radius: 30px;
-
-  color: white;
-
-  font-size: 13px;
-
-  font-weight: 700;
-
-  letter-spacing: .3px;
-
-  margin-bottom: 10px;
-}
-
-/* ===================== */
-/* Textos */
-/* ===================== */
-
-h2 {
-  margin: 0 0 10px;
-}
-
-.data-text {
-
-  color: #42a5f5;
-
-  font-size: 14px;
-
-  margin: 6px 0;
-}
-
-.nome-text {
-
-  color: #e5e5e5;
-
-  font-size: 15px;
-
-  margin-top: 8px;
-
-  font-weight: 500;
-}
-
-/* ===================== */
-/* Sem escalas */
-/* ===================== */
-
-.vazio {
-
+.loading-container {
   display: flex;
-
-  justify-content: center;
-
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 14px;
 
-  height: 70vh;
+  ion-spinner {
+    --color: #38bdf8;
+    transform: scale(1.3);
+  }
 
-  color: #8b8b8b;
+  p {
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+  }
+}
 
-  font-size: 16px;
+/* ===================== */
+/* Filtros Superiores    */
+/* ===================== */
+.filtros-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0 16px 0;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
 
+.filtros-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.filtro-pill {
+  padding: 8px 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #9ca3af;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease;
+}
+
+.filtro-pill.active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.45);
+}
+
+/* ===================== */
+/* Seção Turno           */
+/* ===================== */
+.secao-turno {
+  margin-bottom: 22px;
+}
+
+.secao-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.marcador-linha {
+  width: 4px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.marcador-linha.manha {
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+}
+
+.marcador-linha.quinta {
+  background: #c084fc;
+  box-shadow: 0 0 10px #c084fc;
+}
+
+.marcador-linha.noite {
+  background: #22d3ee;
+  box-shadow: 0 0 10px #22d3ee;
+}
+
+.secao-icon {
+  font-size: 20px;
+}
+
+.secao-icon.manha { color: #38bdf8; }
+.secao-icon.quinta { color: #c084fc; }
+.secao-icon.noite { color: #22d3ee; }
+
+.secao-titulo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f3f4f6;
+  letter-spacing: -0.2px;
+}
+
+/* ===================== */
+/* Cards de Escala       */
+/* ===================== */
+.escala-card {
+  background: rgba(17, 24, 39, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: transform 0.18s ease;
+}
+
+.escala-card:active {
+  transform: scale(0.98);
+}
+
+.card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-calendar-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.card-calendar-icon.manha {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.3), rgba(2, 132, 199, 0.7));
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+}
+
+.card-calendar-icon.quinta {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(126, 34, 206, 0.7));
+  border: 1px solid rgba(192, 132, 252, 0.4);
+  color: #c084fc;
+  box-shadow: 0 0 14px rgba(192, 132, 252, 0.35);
+}
+
+.card-calendar-icon.noite {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(14, 116, 144, 0.7));
+  border: 1px solid rgba(34, 211, 238, 0.4);
+  color: #22d3ee;
+  box-shadow: 0 0 14px rgba(34, 211, 238, 0.35);
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-data {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f9fafb;
+}
+
+.card-sub {
+  font-size: 0.84rem;
+  color: #9ca3af;
+}
+
+.card-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-ministerio {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.card-chevron {
+  font-size: 18px;
+  color: #6b7280;
+}
+
+/* ===================== */
+/* Vazio                 */
+/* ===================== */
+.container-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 20px;
   text-align: center;
 }
 
-/* ===================== */
-/* Tema claro */
-/* ===================== */
+.vazio-icon {
+  font-size: 48px;
+  color: #4b5563;
+  margin-bottom: 12px;
+}
 
+.vazio {
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
+
+/* ===================== */
+/* Adaptação Modo Claro  */
+/* ===================== */
 @media (prefers-color-scheme: light) {
-
-  ion-content {
-    --background: #f3f5f9;
-  }
-
   ion-toolbar {
     --background: #ffffff;
     --color: #111827;
-    border-bottom: 1px solid rgba(21, 101, 192, .15);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   }
 
   ion-title {
     color: #111827;
   }
 
-  ion-item {
-    --background: #ffffff;
-    --color: #111827;
-    border: 1px solid rgba(21, 101, 192, .12);
-    box-shadow: 0 6px 18px rgba(15, 23, 42, .08);
+  .filtro-pill {
+    background: #f3f4f6;
+    color: #4b5563;
+    border-color: #e5e7eb;
   }
 
-  ion-item:hover {
-    --background: #eef1f6;
+  .filtro-pill.active {
+    background: #2563eb;
+    color: #ffffff;
   }
 
-  .nome-text {
-    color: #374151;
+  .secao-titulo {
+    color: #111827;
+  }
+
+  .escala-card {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  }
+
+  .card-data {
+    color: #111827;
+  }
+
+  .card-sub {
+    color: #6b7280;
   }
 
   .vazio {
     color: #6b7280;
   }
-}
-
-/* ===================== */
-/* Scroll */
-/* ===================== */
-
-ion-content::part(scroll) {
-  padding-bottom: 20px;
-}
-
-/* ===================== */
-/* Animação */
-/* ===================== */
-
-@keyframes aparecer {
-
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-}
-
-/* ===================== */
-/* Mobile */
-/* ===================== */
-
-@media (max-width: 480px) {
-
-  ion-item {
-    --min-height: 82px;
-  }
-
-  .pill-ministerio {
-    font-size: 12px;
-    padding: 5px 12px;
-  }
-
-  .nome-text {
-    font-size: 14px;
-  }
-
 }

@@ -12,68 +12,102 @@
 
 <ion-content class="ion-padding">
 
-  <ion-card *ngFor="let escala of escalas" [hidden]="!temPresencaNaEscala(escala)">
-    <ion-card-header>
-      <ion-card-title>
-        {{ formatarData(escala.data) }}
-        <span *ngIf="escala.turno" style="font-size:0.75em;color:var(--ion-color-primary);margin-left:6px;font-weight:400;">
-          {{ formatarTurno(escala.turno) }}
-        </span>
-      </ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-      <ng-container *ngIf="getFuncoes(escala).length > 0">
-        <div *ngFor="let funcao of getFuncoes(escala)">
-          <p *ngIf="getNomesNaFuncao(escala, funcao).length > 0" class="funcao-linha">
-            {{ funcao }}: {{ getNomesNaFuncao(escala, funcao).join(', ') }}
-          </p>
-        </div>
-
-        <div *ngIf="getFuncoesVagas(escala).length > 0">
-          <p class="funcao-vaga" *ngFor="let vaga of getFuncoesVagas(escala)">
-            {{ vaga }}: —
-          </p>
-        </div>
-
-        <div *ngIf="getSemFuncao(escala).length > 0">
-          <p class="funcao-linha">{{ getSemFuncao(escala).join(', ') }}</p>
-        </div>
-      </ng-container>
-
-      <div *ngIf="getFuncoes(escala).length === 0">
-        <p class="funcao-linha">{{ getParticipantes(escala).join(', ') }}</p>
-      </div>
-
-      <ion-button
-        *ngIf="isLiderDe(ministerio) || isAdmin"
-        color="primary"
-        size="small"
-        (click)="editarEscala(escala)"
-      >
-        Editar
-      </ion-button>
-      <ion-button
-        *ngIf="isLiderDe(ministerio) || isAdmin"
-        color="danger"
-        size="small"
-        (click)="excluirEscala(escala.id)"
-      >
-        Excluir
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-text *ngIf="escalas.length === 0" class="ion-text-center">
-    <p>Nenhuma escala encontrada</p>
-  </ion-text>
-
-  <div *ngIf="isLiderDe(ministerio) || isAdmin" class="botoes-criar">
-    <ion-button expand="full" color="primary" (click)="criarEscala()">
-      Criar escala - {{ formatarNomeMinisterio() }}
-    </ion-button>
+  <!-- Spinner de Carregamento Inicial -->
+  <div *ngIf="carregando" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando escalas...</p>
   </div>
 
+  <div class="escalas-container" *ngIf="!carregando && escalas.length > 0">
+    <div
+      class="escala-card-box"
+      *ngFor="let escala of escalas"
+      [hidden]="!temPresencaNaEscala(escala)"
+    >
+      <!-- Cabeçalho do Card: Data, Turno e Contagem -->
+      <div class="escala-card-header">
+        <div class="header-left">
+          <span class="data-titulo">{{ formatarData(escala.data) }}</span>
+          <span *ngIf="escala.turno" class="badge-turno" [class.noite]="escala.turno === 'noite'">
+            {{ formatarTurno(escala.turno) }}
+          </span>
+        </div>
 
+        <div class="badge-contagem">
+          {{ getTotalEscalados(escala) }}/{{ getTotalVagas(escala) }} escalados
+        </div>
+      </div>
+
+      <!-- Linhas das Funções -->
+      <div class="escala-funcoes-lista">
+
+        <!-- Funções Preenchidas -->
+        <ng-container *ngFor="let funcao of getFuncoes(escala)">
+          <div class="funcao-row ocupada" *ngIf="getNomesNaFuncao(escala, funcao).length > 0">
+            <div class="funcao-indicator ocupada"></div>
+            <span class="funcao-nome">{{ formatarPrimeiraMaiuscula(funcao) }}</span>
+            <span class="funcao-voluntarios">{{ getNomesNaFuncao(escala, funcao).join(', ') }}</span>
+          </div>
+        </ng-container>
+
+        <!-- Funções Vagas -->
+        <ng-container *ngFor="let vaga of getFuncoesVagas(escala)">
+          <div class="funcao-row vaga">
+            <div class="funcao-indicator vaga"></div>
+            <span class="funcao-nome vaga">{{ formatarPrimeiraMaiuscula(vaga) }}</span>
+            <span class="funcao-voluntarios vaga">—</span>
+          </div>
+        </ng-container>
+
+        <!-- Ministérios sem cargos específicos cadastrados (exibe direto os nomes) -->
+        <div class="funcao-row ocupada" *ngIf="getFuncoes(escala).length === 0">
+          <div class="funcao-indicator ocupada"></div>
+          <span class="funcao-voluntarios-direto">{{ getParticipantes(escala).join(', ') }}</span>
+        </div>
+
+      </div>
+
+      <!-- Barra de Ações (Compartilhar, Editar, Excluir) -->
+      <div class="escala-card-actions">
+        <button
+          class="btn-action-icon"
+          (click)="compartilharEscalaIndividual(escala)"
+          aria-label="Compartilhar escala"
+          title="Compartilhar no WhatsApp"
+        >
+          <ion-icon name="share-social-outline"></ion-icon>
+        </button>
+
+        <div class="actions-right" *ngIf="isLiderDe(ministerio) || isAdmin">
+          <button class="btn-action-edit" (click)="editarEscala(escala)">
+            <ion-icon name="pencil-sharp"></ion-icon>
+            <span>Editar</span>
+          </button>
+
+          <button class="btn-action-delete" (click)="excluirEscala(escala.id)">
+            <ion-icon name="trash-outline"></ion-icon>
+            <span>Excluir</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Estado Vazio -->
+  <div *ngIf="!carregando && escalas.length === 0" class="vazio-container">
+    <ion-icon name="calendar-outline" class="vazio-icon"></ion-icon>
+    <p class="vazio-texto">Nenhuma escala encontrada para este ministério.</p>
+  </div>
+
+  <!-- Botão Criar Escala (Sem botão flutuante '+') -->
+  <div *ngIf="isLiderDe(ministerio) || isAdmin" class="botoes-criar-container">
+    <button class="btn-criar-escala" (click)="criarEscala()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+      <span>Criar escala - {{ formatarNomeMinisterio() }}</span>
+    </button>
+  </div>
 
 </ion-content>
+
+<app-bottom-nav activeTab="escalas"></app-bottom-nav>

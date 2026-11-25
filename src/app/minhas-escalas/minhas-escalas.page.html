@@ -11,28 +11,130 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ng-container *ngIf="escalas.length > 0; else vazio">
-    <ion-list>
-      <ion-item *ngFor="let e of escalas" lines="full">
-        <ion-label>
-          <h2>
-            <span class="pill-ministerio" [style.background]="corMinisterio(e.ministerio)">
-              {{ formatarMinisterio(e.ministerio) }}
-            </span>
-          </h2>
-          <p class="data-text">
-            {{ formatarData(e.data) }}
-            <span *ngIf="e.turno" style="font-size:0.85em;color:var(--ion-color-primary);margin-left:4px;">
-              ({{ e.turno === 'manha' ? 'Manhã' : 'Noite' }})
-            </span>
-          </p>
-          <p class="nome-text">{{ e.nome }}</p>
-        </ion-label>
-      </ion-item>
-    </ion-list>
+
+  <!-- Spinner de Carregamento Inicial -->
+  <div *ngIf="carregando" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando suas escalas...</p>
+  </div>
+
+  <ng-container *ngIf="!carregando">
+    <!-- Filtros Superiores (Pills horizontais) -->
+  <div class="filtros-scroll">
+    <div
+      class="filtro-pill"
+      [class.active]="filtroMinisterio === 'todos'"
+      (click)="setFiltro('todos')"
+    >
+      Todas
+    </div>
+    <div
+      *ngFor="let min of ministeriosUsuario"
+      class="filtro-pill"
+      [class.active]="filtroMinisterio === min.chave"
+      (click)="setFiltro(min.chave)"
+    >
+      {{ min.nome }}
+    </div>
+  </div>
+
+  <ng-container *ngIf="escalasFiltradas.length > 0; else vazio">
+
+    <!-- Seção Manhã -->
+    <div class="secao-turno" *ngIf="escalasManha.length > 0">
+      <div class="secao-header manha">
+        <div class="marcador-linha manha"></div>
+        <ion-icon name="sunny-outline" class="secao-icon manha"></ion-icon>
+        <span class="secao-titulo">Manhã</span>
+      </div>
+
+      <div class="escala-card" *ngFor="let e of escalasManha">
+        <div class="card-left">
+          <div class="card-calendar-icon manha">
+            <ion-icon name="calendar"></ion-icon>
+          </div>
+          <div class="card-info">
+            <span class="card-data">{{ formatarData(e.data) }}</span>
+            <span class="card-sub">{{ e.nome }} - {{ e.funcao }}</span>
+          </div>
+        </div>
+
+        <div class="card-right">
+          <span class="badge-ministerio" [style.background]="corMinisterio(e.ministerio)">
+            {{ formatarMinisterio(e.ministerio) }}
+          </span>
+          <ion-icon name="chevron-forward-outline" class="card-chevron"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção Quinta -->
+    <div class="secao-turno" *ngIf="escalasQuinta.length > 0">
+      <div class="secao-header quinta">
+        <div class="marcador-linha quinta"></div>
+        <ion-icon name="partly-sunny-outline" class="secao-icon quinta"></ion-icon>
+        <span class="secao-titulo">Quinta</span>
+      </div>
+
+      <div class="escala-card" *ngFor="let e of escalasQuinta">
+        <div class="card-left">
+          <div class="card-calendar-icon quinta">
+            <ion-icon name="calendar"></ion-icon>
+          </div>
+          <div class="card-info">
+            <span class="card-data">{{ formatarData(e.data) }}</span>
+            <span class="card-sub">{{ e.nome }} - {{ e.funcao }}</span>
+          </div>
+        </div>
+
+        <div class="card-right">
+          <span class="badge-ministerio" [style.background]="corMinisterio(e.ministerio)">
+            {{ formatarMinisterio(e.ministerio) }}
+          </span>
+          <ion-icon name="chevron-forward-outline" class="card-chevron"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção Noite -->
+    <div class="secao-turno" *ngIf="escalasNoite.length > 0">
+      <div class="secao-header noite">
+        <div class="marcador-linha noite"></div>
+        <ion-icon name="moon-outline" class="secao-icon noite"></ion-icon>
+        <span class="secao-titulo">Noite</span>
+      </div>
+
+      <div class="escala-card" *ngFor="let e of escalasNoite">
+        <div class="card-left">
+          <div class="card-calendar-icon noite">
+            <ion-icon name="calendar"></ion-icon>
+          </div>
+          <div class="card-info">
+            <span class="card-data">{{ formatarData(e.data) }}</span>
+            <span class="card-sub">{{ e.nome }} - {{ e.funcao }}</span>
+          </div>
+        </div>
+
+        <div class="card-right">
+          <span class="badge-ministerio" [style.background]="corMinisterio(e.ministerio)">
+            {{ formatarMinisterio(e.ministerio) }}
+          </span>
+          <ion-icon name="chevron-forward-outline" class="card-chevron"></ion-icon>
+        </div>
+      </div>
+    </div>
+
   </ng-container>
 
   <ng-template #vazio>
-    <p class="vazio">Você não está em nenhuma escala.</p>
+    <div class="container-vazio">
+      <ion-icon name="calendar-outline" class="vazio-icon"></ion-icon>
+      <p class="vazio">Nenhuma escala encontrada para este filtro.</p>
+    </div>
   </ng-template>
+
+  </ng-container>
+
 </ion-content>
+
+<app-bottom-nav activeTab="minhas-escalas"></app-bottom-nav>
