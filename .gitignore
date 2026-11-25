@@ -76,3 +76,18 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Security & Signing (Open Source Protection)
+*.keystore
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+google-services.json
+GoogleService-Info.plist
+
+# Local developer overrides
+*.local
+.env.local
+.env.*.local
